@@ -4,7 +4,7 @@ import pandas as pd
 import requests
 
 # ========== ZÁKLADNÍ NASTAVENÍ APPKY ==========
-st.set_page_config(page_title="Jak se stát testerem", page_icon="✅", layout="wide")
+st.set_page_config(page_title="Jak se stát testerem", page_icon="🐞", layout="wide")
 
 # ========== STYLY (větší titulek a čitelnější menu v sidebaru) ==========
 st.markdown("""
