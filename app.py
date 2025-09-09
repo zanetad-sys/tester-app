@@ -764,8 +764,6 @@ def page_zdroje():
 """
     st.download_button("⬇️ Stáhnout seznam zdrojů (Markdown)", resources_md, file_name="uzitecne-zdroje.md")
 
-    st.dataframe(zdroje, use_container_width=True)
-
 def page_teorie():
     st.header("📖 Základní teorie testování")
 
