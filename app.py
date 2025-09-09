@@ -272,7 +272,8 @@ st.markdown("""
 - **Failure** = projev chyby v běžícím systému.
 """)
 
-    st.subheader("API základy")
+st.subheader("API základy")
+
     st.markdown("""
 - **API** = rozhraní pro komunikaci mezi systémy.  
 - **HTTP metody**: GET, POST, PUT, PATCH, DELETE  
