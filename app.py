@@ -83,7 +83,7 @@ def page_zaklady():
         value=st.session_state.done.get("qa_vv", False),
     )
     st.session_state.done["qa_sevpri"] = st.checkbox(
-        "Severity vs. priorita bugů",
+        "Severita vs. priorita bugů",
         value=st.session_state.done.get("qa_sevpri", False),
     )
 
@@ -93,7 +93,7 @@ def page_zaklady():
 - **Role testera** = hledá chyby, přemýšlí za uživatele, zajišťuje, že produkt odpovídá požadavkům.  
 - **SDLC** = waterfall (fáze po sobě) vs. agile (Scrum, iterace).  
 - **Verifikace** = děláme věci správně, **Validace** = děláme správné věci.  
-- **Severity** = dopad chyby, **Priorita** = jak rychle ji opravit.
+- **Severita** = dopad chyby, **Priorita** = jak rychle ji opravit.
 """)
 
     st.divider()
@@ -215,23 +215,194 @@ def page_zaklady():
 
 
 def page_nastroje():
-    st.header("2) Nástroje a praxe")
-    st.session_state.done["jira"] = st.checkbox(
-        "Jira/Trello – evidence úkolů",
-        value=st.session_state.done["jira"],
+    st.header("2) Nástroje – co by měl tester znát")
+
+    # ============== ORGANIZACE & BUG TRACKING ==============
+    st.subheader("🗂️ Organizace & bug tracking")
+    c1, c2 = st.columns(2)
+    with c1:
+        st.session_state.done["tools_jira"] = st.checkbox(
+            "Jira / Trello / Asana / Bugzilla – evidence úkolů a bugů",
+            value=st.session_state.done["tools_jira"]
+        )
+    with c2:
+        st.session_state.done["tools_testmgmt"] = st.checkbox(
+            "Test management: TestRail / Xray / Zephyr / Azure DevOps / (i Excel/Sheets)",
+            value=st.session_state.done["tools_testmgmt"]
+        )
+    with st.expander("🎓 Tipy – workflow & reporty"):
+        st.markdown("""
+- **Workflow:** To Do → In Progress → In Review → Done  
+- **Bug report:** název, prostředí, kroky, očekávané vs. aktuální, důkazy, **Sev/Pri**  
+- **Vazby:** ticket ↔️ PR/MR ↔️ test cases ↔️ release notes
+""")
+
+    st.divider()
+
+    # ============== API & KOMUNIKACE ==============
+    st.subheader("🌐 API & komunikace")
+    c1, c2, c3 = st.columns(3)
+    with c1:
+        st.session_state.done["tools_postman"] = st.checkbox(
+            "Postman – kolekce, environmenty, test scripts",
+            value=st.session_state.done["tools_postman"]
+        )
+    with c2:
+        st.session_state.done["tools_soapui"] = st.checkbox(
+            "SOAP UI – testování SOAP (XML) služeb",
+            value=st.session_state.done["tools_soapui"]
+        )
+    with c3:
+        st.session_state.done["tools_curl"] = st.checkbox(
+            "curl – rychlé volání API v terminálu",
+            value=st.session_state.done["tools_curl"]
+        )
+    with st.expander("🎓 Tahák – HTTP & API"):
+        st.code("""# GET
+curl -i https://jsonplaceholder.typicode.com/todos/1
+
+# POST (JSON body)
+curl -i -X POST https://httpbin.org/post \
+  -H "Content-Type: application/json" \
+  -d '{"title":"Test","completed":false}'
+""", language="bash")
+
+    st.divider()
+
+    # ============== VERZOVÁNÍ ==============
+    st.subheader("🔁 Verzování")
+    st.session_state.done["tools_git"] = st.checkbox(
+        "Git + GitHub/GitLab/Bitbucket (commity, PR/MR, code review)",
+        value=st.session_state.done["tools_git"]
     )
-    st.session_state.done["testcases"] = st.checkbox(
-        "Test cases a bug reporting",
-        value=st.session_state.done["testcases"],
+    with st.expander("🎓 Tahák – Git"):
+        st.code("""git checkout -b feat/x
+git add .
+git commit -m "feat: x"
+git push -u origin feat/x
+# otevři PR/MR → review → merge
+""", language="bash")
+
+    st.divider()
+
+    # ============== AUTOMATIZACE TESTŮ ==============
+    st.subheader("🤖 Automatizace testů")
+    c1, c2, c3, c4 = st.columns(4)
+    with c1:
+        st.session_state.done["tools_python"] = st.checkbox(
+            "Python / (Java/JS dle firmy)",
+            value=st.session_state.done["tools_python"]
+        )
+    with c2:
+        st.session_state.done["tools_playwright"] = st.checkbox(
+            "Playwright (UI testy)",
+            value=st.session_state.done["tools_playwright"]
+        )
+    with c3:
+        st.session_state.done["tools_selenium"] = st.checkbox(
+            "Selenium (UI testy)",
+            value=st.session_state.done["tools_selenium"]
+        )
+    with c4:
+        st.session_state.done["tools_pytest"] = st.checkbox(
+            "pytest (spouštění, fixtures, reporty)",
+            value=st.session_state.done["tools_pytest"]
+        )
+    st.session_state.done["tools_selide"] = st.checkbox(
+        "Selenium IDE? (základní klikací záznam – spíš na rychlé prototypy)",
+        value=st.session_state.done["tools_selide"]
     )
-    st.session_state.done["api"] = st.checkbox(
-        "API testování (Postman)",
-        value=st.session_state.done["api"],
+
+    st.divider()
+
+    # ============== DEVTOOLS & LOGY ==============
+    st.subheader("🧰 DevTools & logy")
+    c1, c2 = st.columns(2)
+    with c1:
+        st.session_state.done["tools_devtools"] = st.checkbox(
+            "Chrome/Edge DevTools (Network, Console, Storage, Cookies)",
+            value=st.session_state.done["tools_devtools"]
+        )
+    with c2:
+        st.session_state.done["tools_logs"] = st.checkbox(
+            "Logy: application/system/security (např. logcat, journald, server logy)",
+            value=st.session_state.done["tools_logs"]
+        )
+    with st.expander("🎓 K čemu logy?"):
+        st.markdown("""
+- **Application**: stack trace, chybové hlášky, custom logy  
+- **System/journald**: služby, paměť, síť  
+- **Security**: přihlášení, 403/401, audit
+""")
+
+    st.divider()
+
+    # ============== CI/CD ==============
+    st.subheader("⚙️ CI/CD")
+    st.session_state.done["tools_cicd"] = st.checkbox(
+        "GitHub Actions / GitLab CI – spouštět testy po commitu",
+        value=st.session_state.done["tools_cicd"]
     )
-    st.session_state.done["auto"] = st.checkbox(
-        "Automatizace – Python + Playwright/pytest",
-        value=st.session_state.done["auto"],
+    with st.expander("🎓 Příklad (GitHub Actions – pytest)"):
+        st.code("""# .github/workflows/tests.yml
+name: tests
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - run: pip install -r requirements.txt
+      - run: pytest -q
+""", language="yaml")
+
+    st.divider()
+
+    # ============== DATABÁZE ==============
+    st.subheader("🗄️ Databáze")
+    st.session_state.done["tools_db_clients"] = st.checkbox(
+        "DBeaver / pgAdmin / MySQL Workbench (GUI pro SQL)",
+        value=st.session_state.done["tools_db_clients"]
     )
+    with st.expander("🎓 Jak do toho zapadá MySQL, MS SQL, Oracle, PHP?"):
+        st.markdown("""
+- **MySQL, PostgreSQL, MS SQL, Oracle** = **SŘBD** (databázové servery).  
+- **DBeaver/pgAdmin/MySQL Workbench** = **GUI klienti** pro práci s těmito DB.  
+- **SQL** je jazyk dotazů (SELECT/INSERT/UPDATE/DELETE, JOINy).  
+- **PHP** je **programovací jazyk** pro backend – může se přes **SQL driver** připojit k DB (stejně jako Python/Java/JS).
+""")
+
+    st.divider()
+
+    # ============== DOPLŇKOVÉ ==============
+    st.subheader("🧩 Doplňkové")
+    c1, c2, c3 = st.columns(3)
+    with c1:
+        st.session_state.done["tools_docker"] = st.checkbox(
+            "Docker – lokální dev/test prostředí",
+            value=st.session_state.done["tools_docker"]
+        )
+    with c2:
+        st.session_state.done["tools_ide"] = st.checkbox(
+            "IDE: VS Code / PyCharm (debugging, linting)",
+            value=st.session_state.done["tools_ide"]
+        )
+    with c3:
+        st.session_state.done["tools_perf"] = st.checkbox(
+            "Výkonnostní testy: JMeter / k6 (aspoň základy)",
+            value=st.session_state.done["tools_perf"]
+        )
+
+    st.divider()
+
+    # ============== Export checklistu ==============
+    chosen = [label for label, done in st.session_state.done.items()
+              if label.startswith("tools_") and done]
+    text = "Nástroje – splněno:\n" + "\n".join(f"- {x}" for x in chosen) if chosen else "Zatím nic nezaškrtnuto."
+    st.download_button("⬇️ Stáhnout checklist nástrojů (TXT)", text, "nastroje-checklist.txt")
+
 
 def page_portfolio():
     st.header("3) Portfolio a práce")
