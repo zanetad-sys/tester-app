@@ -274,22 +274,22 @@ st.markdown("""
 
 st.subheader("API základy")
 
-    st.markdown("""
+st.markdown("""
 - **API** = rozhraní pro komunikaci mezi systémy.  
 - **HTTP metody**: GET, POST, PUT, PATCH, DELETE  
 - **Status kódy**: 200 OK, 201 Created, 204 No Content, 400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found, 500 Server Error  
 - **REST + JSON** (lehké, běžné), **SOAP + XML** (formálnější, často enterprise).
 """)
 
-    st.subheader("Metody testování (Black/White/Gray box)")
-    st.markdown("""
+st.subheader("Metody testování (Black/White/Gray box)")
+st.markdown("""
 - **Blackbox** = testuji vstupy/výstupy, neřeším kód.  
 - **Whitebox** = znám vnitřní strukturu kódu.  
 - **Graybox** = něco z obou (např. znáš schémata DB, logiku).
 """)
 
-    st.subheader("SQL – základy")
-    st.markdown("""
+st.subheader("SQL – základy")
+st.markdown("""
 - **DDL**: `CREATE`, `ALTER`, `DROP`  
 - **DML**: `INSERT`, `UPDATE`, `DELETE`  
 - **DQL**: `SELECT`  
@@ -299,15 +299,15 @@ st.subheader("API základy")
 - **Cizí klíč** = odkaz na primární klíč jiné tabulky
 """)
 
-    st.subheader("Logy – typy")
-    st.markdown("""
+st.subheader("Logy – typy")
+st.markdown("""
 - **Application log** (chyby v aplikaci)  
 - **System log** (OS, služby)  
 - **Security log** (přihlášení, audit)
 """)
 
-    st.subheader("BDD – Behavior Driven Development")
-    st.markdown("""
+st.subheader("BDD – Behavior Driven Development")
+st.markdown("""
 **Given** (předpoklad) – **When** (akce) – **Then** (výsledek)
 
 Příklad:  
