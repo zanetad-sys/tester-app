@@ -587,20 +587,135 @@ jobs:
 
 def page_portfolio():
     st.header("3) Portfolio a práce")
+
+    # --- tvoje původní checkboxy (bezpečné čtení přes .get) ---
     st.session_state.done["projects"] = st.checkbox(
         "Miniprojekty na GitHubu",
-        value=st.session_state.done["projects"],
+        value=st.session_state.done.get("projects", False),
     )
     st.session_state.done["readme"] = st.checkbox(
         "README a ukázkové bug reporty",
-        value=st.session_state.done["readme"],
+        value=st.session_state.done.get("readme", False),
     )
     st.session_state.done["cv"] = st.checkbox(
         "CV + LinkedIn – zdůraznit praxi",
-        value=st.session_state.done["cv"],
+        value=st.session_state.done.get("cv", False),
+    )
+
+    st.info(
+        "Tip: Každý projekt = jeden konkrétní skill. Krátký, ale čitelný README a pár kvalitních bug reportů "
+        "mají větší hodnotu než obří repo bez popisu."
     )
 
     st.divider()
+
+    # --- Týdenní plán (TVŮJ PŮVODNÍ KÓD – nechaný beze změn) ---
+    with st.form("plan"):
+        st.subheader("🗺️ Týdenní plán")
+        jmeno = st.text_input("Jméno (volitelné)", "")
+        hodin = st.slider("Kolik hodin týdně zvládneš?", 1, 20, 5)
+        fokus = st.selectbox(
+            "Hlavní fokus na týden",
+            ["Základy", "API testování", "Automatizace", "Portfolio/README"],
+        )
+        submit = st.form_submit_button("Vygenerovat plán")
+        if submit:
+            body = {
+                "Základy": [
+                    "• 2 h Git + GitHub",
+                    "• 2 h HTML/CSS/JS",
+                    "• 1 h SQL",
+                ],
+                "API testování": [
+                    "• 2 h Postman základy",
+                    "• 2 h psaní requestů",
+                    "• 1 h dokumentace",
+                ],
+                "Automatizace": [
+                    "• 2 h Python",
+                    "• 2 h Playwright/pytest",
+                    "• 1 h refaktor",
+                ],
+                "Portfolio/README": [
+                    "• 2 h README + ukázky",
+                    "• 2 h miniprojekt",
+                    "• 1 h polishing",
+                ],
+            }
+            st.success((f"{jmeno}, " if jmeno else "") + f"tvůj plán na {hodin} h/týden:")
+            st.write("\n".join(body[fokus]))
+
+    st.divider()
+
+    # --- Generátor README pro miniprojekt ---
+    st.subheader("🧩 Generátor README.md pro miniprojekt")
+    with st.form("readme_form"):
+        proj = st.text_input("Název projektu", "qa-api-tests")
+        popis = st.text_area("Krátký popis", "Sada API testů pro demo službu (REST).")
+        technologie = st.text_input("Technologie", "Python, pytest, requests, Postman")
+        kroky = st.text_area("Jak spustit", "pip install -r requirements.txt\npytest -q")
+        co_testuju = st.text_area(
+            "Co se testuje",
+            "- Smoke testy endpointů\n- Pozitivní/negativní scénáře\n- Validace status kódů a JSON schema"
+        )
+        odkaz = st.text_input("Odkaz (repo / appka)", "https://github.com/uzivatel/qa-api-tests")
+        submit_readme = st.form_submit_button("Vygenerovat README")
+        if submit_readme:
+            md = f"""# {proj}
+
+{popis}
+
+## Technologie
+{technologie}
+
+## Jak spustit
+
+## Co se testuje
+{co_testuju}
+
+## Odkazy
+- Repo/App: {odkaz}
+"""
+            st.code(md, language="markdown")
+            st.download_button("⬇️ Stáhnout README.md", md, file_name="README.md")
+
+    st.divider()
+
+    # --- Šablony ke stažení (bug report, test case) ---
+    st.subheader("📑 Šablony do portfolia")
+    bug = """Název: [Checkout] 500 při prázdném košíku
+Prostředí: test, v1.2.3 (build #456), Chrome 127
+Kroky: 1) Otevřít /checkout 2) Kliknout „Zaplatit“ s prázdným košíkem
+Očekávané: Validace „Košík je prázdný“
+Aktuální: HTTP 500, bílá stránka
+Důkazy: screenshot.png, network.har
+Sev/Pri: High / P1  Pozn.: Regrese od v1.2.2
+"""
+    tc = """ID: TC-LOGIN-001
+Cíl: Přihlášení validního uživatele
+Kroky: 1) Otevřít /login  2) Vyplnit platné údaje  3) Odeslat
+Očekávané: Přesměrování na /dashboard
+Priorita: P1  Data: user@test.com / *****  Stav: PASS/FAIL
+"""
+    st.download_button("⬇️ Stáhnout Bug report (MD)", bug, file_name="bug-report.md")
+    st.download_button("⬇️ Stáhnout Test Case (MD)", tc, file_name="test-case.md")
+
+    st.divider()
+
+    # --- Nápady na miniprojekty + checklist export ---
+    st.subheader("💡 Nápady na miniprojekty")
+    st.markdown("""
+- **API testy**: kolekce v Postmanu + README (JSONPlaceholder/Swagger Petstore)  
+- **UI testy**: 3–5 scénářů v Playwrightu (login, košík, vyhledávání)  
+- **SQL cvičení**: složka `sql/` se záznamy dotazů + vysvětlení  
+- **DevTools**: analýza `Network` pro 1 scénář (screenshoty, popis)  
+- **Logy**: krátký článek „co jsem našla v application logu při chybě 500“
+""")
+
+    chosen = [k for k, v in st.session_state.done.items() if k in ("projects", "readme", "cv") and v]
+    text = "Portfolio – splněno:\n" + "\n".join(f"- {x}" for x in chosen) if chosen else "Zatím nic nezaškrtnuto."
+    st.download_button("⬇️ Stáhnout checklist portfolia (TXT)", text, "portfolio-checklist.txt")
+
     with st.form("plan"):
         st.subheader("🗺️ Týdenní plán")
         jmeno = st.text_input("Jméno (volitelné)", "")
