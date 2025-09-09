@@ -215,6 +215,7 @@ def page_teorie():
 - **Systémové** – testuje se celý systém jako celek, funkční i nefunkční testy (ověření, zda splňuje požadavky)  
 - **Akceptační** – provádí klient nebo koncový uživatel, testuje reálné scénáře použití, cílem je potvrdit, že je aplikace připravená k nasazení  
 """)
+
     st.subheader("Verifikace vs. Validace")
     st.markdown("""
 - **Verifikace** = Ověřuji, zda produkt odpovídá specifikaci (*Stavíme správně?*).  
@@ -222,7 +223,7 @@ def page_teorie():
 """)
 
     st.subheader("Severita vs. Priorita")
-st.markdown("""
+    st.markdown("""
 ### 🔹 Severita (Severity)
 Udává **závažnost chyby z technického pohledu** – jak moc chyba ovlivňuje funkčnost systému.  
 Obvykle ji určuje **tester/QA**.
@@ -251,45 +252,35 @@ Obvykle ji určuje **Product Owner / Project Manager**.
 - **Priorita = kdy to opravíme (business pohled)**  
 
 **Příklady:**
-- ✅ Překlep v názvu aplikace:  
-  - Severita: Low  
-  - Priorita: High (ostuda na produkci)  
-
-- ✅ Platba kartou nefunguje:  
-  - Severita: Critical  
-  - Priorita: High  
-
-- ✅ Tlačítko padá jen v Edge:  
-  - Severita: Medium  
-  - Priorita: Low  
+- ✅ Překlep v názvu aplikace: Severita Low, Priorita High  
+- ✅ Platba kartou nefunguje: Severita Critical, Priorita High  
+- ✅ Tlačítko padá jen v Edge: Severita Medium, Priorita Low  
 """)
-    
-st.subheader("Bug vs. Defect vs. Failure")
-    
-st.markdown("""
+
+    st.subheader("Bug vs. Defect vs. Failure")
+    st.markdown("""
 - **Bug** = chyba nalezená při testování.  
 - **Defect** = nesoulad se specifikací (většinou v kódu).  
 - **Failure** = projev chyby v běžícím systému.
 """)
 
-st.subheader("API základy")
-
-st.markdown("""
+    st.subheader("API základy")
+    st.markdown("""
 - **API** = rozhraní pro komunikaci mezi systémy.  
 - **HTTP metody**: GET, POST, PUT, PATCH, DELETE  
 - **Status kódy**: 200 OK, 201 Created, 204 No Content, 400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found, 500 Server Error  
 - **REST + JSON** (lehké, běžné), **SOAP + XML** (formálnější, často enterprise).
 """)
 
-st.subheader("Metody testování (Black/White/Gray box)")
-st.markdown("""
+    st.subheader("Metody testování (Black/White/Gray box)")
+    st.markdown("""
 - **Blackbox** = testuji vstupy/výstupy, neřeším kód.  
 - **Whitebox** = znám vnitřní strukturu kódu.  
 - **Graybox** = něco z obou (např. znáš schémata DB, logiku).
 """)
 
-st.subheader("SQL – základy")
-st.markdown("""
+    st.subheader("SQL – základy")
+    st.markdown("""
 - **DDL**: `CREATE`, `ALTER`, `DROP`  
 - **DML**: `INSERT`, `UPDATE`, `DELETE`  
 - **DQL**: `SELECT`  
@@ -299,15 +290,15 @@ st.markdown("""
 - **Cizí klíč** = odkaz na primární klíč jiné tabulky
 """)
 
-st.subheader("Logy – typy")
-st.markdown("""
+    st.subheader("Logy – typy")
+    st.markdown("""
 - **Application log** (chyby v aplikaci)  
 - **System log** (OS, služby)  
 - **Security log** (přihlášení, audit)
 """)
 
-st.subheader("BDD – Behavior Driven Development")
-st.markdown("""
+    st.subheader("BDD – Behavior Driven Development")
+    st.markdown("""
 **Given** (předpoklad) – **When** (akce) – **Then** (výsledek)
 
 Příklad:  
