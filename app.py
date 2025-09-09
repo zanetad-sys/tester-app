@@ -212,13 +212,25 @@ def page_zaklady():
     all_items = [k for k, v in st.session_state.done.items() if k.startswith(("qa_", "tech_", "tools_", "auto_", "bonus_"))]
     checklist = "\n".join(f"- {k}" for k in all_items)
     st.download_button("⬇️ Stáhnout checklist všech základů", checklist, "qa-zaklady-checklist.txt")
-
+# ---------- Inicializace klíčů pro stránku "Nástroje" ----------
+_tools_keys = [
+    "tools_jira", "tools_testmgmt",
+    "tools_postman", "tools_soapui", "tools_curl",
+    "tools_git",
+    "tools_python", "tools_playwright", "tools_selenium", "tools_pytest", "tools_selide",
+    "tools_devtools", "tools_logs",
+    "tools_cicd",
+    "tools_db_clients",
+    "tools_docker", "tools_ide", "tools_perf",
+]
+for _k in _tools_keys:
+    st.session_state.done.setdefault(_k, False)
 
 def page_nastroje():
     st.header("2) Nástroje – co by měl tester znát")
 
     # ============== ORGANIZACE & BUG TRACKING ==============
-    st.subheader("🗂️ Organizace & bug tracking")
+    st.subheader("📂 Organizace & bug tracking")
     c1, c2 = st.columns(2)
     with c1:
         st.session_state.done["tools_jira"] = st.checkbox(
@@ -236,6 +248,175 @@ def page_nastroje():
 - **Bug report:** název, prostředí, kroky, očekávané vs. aktuální, důkazy, **Sev/Pri**  
 - **Vazby:** ticket ↔️ PR/MR ↔️ test cases ↔️ release notes
 """)
+
+    st.divider()
+
+    # ============== API & KOMUNIKACE ==============
+    st.subheader("🌐 API & komunikace")
+    c1, c2, c3 = st.columns(3)
+    with c1:
+        st.session_state.done["tools_postman"] = st.checkbox(
+            "Postman – kolekce, environmenty, test scripts",
+            value=st.session_state.done.get("tools_postman", False)
+        )
+    with c2:
+        st.session_state.done["tools_soapui"] = st.checkbox(
+            "SOAP UI – testování SOAP (XML) služeb",
+            value=st.session_state.done.get("tools_soapui", False)
+        )
+    with c3:
+        st.session_state.done["tools_curl"] = st.checkbox(
+            "curl – rychlé volání API v terminálu",
+            value=st.session_state.done.get("tools_curl", False)
+        )
+    with st.expander("🎓 Tahák – HTTP & API"):
+        st.code("""# GET
+curl -i https://jsonplaceholder.typicode.com/todos/1
+
+# POST (JSON body)
+curl -i -X POST https://httpbin.org/post \
+  -H "Content-Type: application/json" \
+  -d '{"title":"Test","completed":false}'
+""", language="bash")
+
+    st.divider()
+
+    # ============== VERZOVÁNÍ ==============
+    st.subheader("🔁 Verzování")
+    st.session_state.done["tools_git"] = st.checkbox(
+        "Git + GitHub/GitLab/Bitbucket (commity, PR/MR, code review)",
+        value=st.session_state.done.get("tools_git", False)
+    )
+    with st.expander("🎓 Tahák – Git"):
+        st.code("""git checkout -b feat/x
+git add .
+git commit -m "feat: x"
+git push -u origin feat/x
+# otevři PR/MR → review → merge
+""", language="bash")
+
+    st.divider()
+
+    # ============== AUTOMATIZACE TESTŮ ==============
+    st.subheader("🤖 Automatizace testů")
+    c1, c2, c3, c4 = st.columns(4)
+    with c1:
+        st.session_state.done["tools_python"] = st.checkbox(
+            "Python / (Java/JS dle firmy)",
+            value=st.session_state.done.get("tools_python", False)
+        )
+    with c2:
+        st.session_state.done["tools_playwright"] = st.checkbox(
+            "Playwright (UI testy)",
+            value=st.session_state.done.get("tools_playwright", False)
+        )
+    with c3:
+        st.session_state.done["tools_selenium"] = st.checkbox(
+            "Selenium (UI testy)",
+            value=st.session_state.done.get("tools_selenium", False)
+        )
+    with c4:
+        st.session_state.done["tools_pytest"] = st.checkbox(
+            "pytest (spouštění, fixtures, reporty)",
+            value=st.session_state.done.get("tools_pytest", False)
+        )
+    st.session_state.done["tools_selide"] = st.checkbox(
+        "Selenium IDE? (klikací záznam – spíš na rychlé prototypy)",
+        value=st.session_state.done.get("tools_selide", False)
+    )
+
+    st.divider()
+
+    # ============== DEVTOOLS & LOGY ==============
+    st.subheader("🧰 DevTools & logy")
+    c1, c2 = st.columns(2)
+    with c1:
+        st.session_state.done["tools_devtools"] = st.checkbox(
+            "Chrome/Edge DevTools (Network, Console, Storage, Cookies)",
+            value=st.session_state.done.get("tools_devtools", False)
+        )
+    with c2:
+        st.session_state.done["tools_logs"] = st.checkbox(
+            "Logy: application/system/security (např. logcat, journald, server logy)",
+            value=st.session_state.done.get("tools_logs", False)
+        )
+    with st.expander("🎓 K čemu logy?"):
+        st.markdown("""
+- **Application**: stack trace, chybové hlášky, custom logy  
+- **System/journald**: služby, paměť, síť  
+- **Security**: přihlášení, 403/401, audit
+""")
+
+    st.divider()
+
+    # ============== CI/CD ==============
+    st.subheader("⚙️ CI/CD")
+    st.session_state.done["tools_cicd"] = st.checkbox(
+        "GitHub Actions / GitLab CI – spouštět testy po commitu",
+        value=st.session_state.done.get("tools_cicd", False)
+    )
+    with st.expander("🎓 Příklad (GitHub Actions – pytest)"):
+        st.code("""# .github/workflows/tests.yml
+name: tests
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - run: pip install -r requirements.txt
+      - run: pytest -q
+""", language="yaml")
+
+    st.divider()
+
+    # ============== DATABÁZE ==============
+    st.subheader("🗄️ Databáze")
+    st.session_state.done["tools_db_clients"] = st.checkbox(
+        "DBeaver / pgAdmin / MySQL Workbench (GUI pro SQL)",
+        value=st.session_state.done.get("tools_db_clients", False)
+    )
+    with st.expander("🎓 Jak do toho zapadá MySQL, MS SQL, Oracle, PHP?"):
+        st.markdown("""
+- **MySQL, PostgreSQL, MS SQL, Oracle** = **SŘBD** (databázové servery).  
+- **DBeaver/pgAdmin/MySQL Workbench** = **GUI klienti** pro práci s těmito DB.  
+- **SQL** je jazyk dotazů (SELECT/INSERT/UPDATE/DELETE, JOINy).  
+- **PHP** je **programovací jazyk** pro backend – přes SQL driver se připojí k DB (stejně jako Python/Java/JS).
+""")
+
+    st.divider()
+
+    # ============== DOPLŇKOVÉ ==============
+    st.subheader("🧩 Doplňkové")
+    c1, c2, c3 = st.columns(3)
+    with c1:
+        st.session_state.done["tools_docker"] = st.checkbox(
+            "Docker – lokální dev/test prostředí",
+            value=st.session_state.done.get("tools_docker", False)
+        )
+    with c2:
+        st.session_state.done["tools_ide"] = st.checkbox(
+            "IDE: VS Code / PyCharm (debugging, linting)",
+            value=st.session_state.done.get("tools_ide", False)
+        )
+    with c3:
+        st.session_state.done["tools_perf"] = st.checkbox(
+            "Výkonnostní testy: JMeter / k6 (aspoň základy)",
+            value=st.session_state.done.get("tools_perf", False)
+        )
+
+    st.divider()
+
+    # ============== Export checklistu ==============
+    chosen = [
+        k for k, v in st.session_state.done.items()
+        if k.startswith("tools_") and v
+    ]
+    text = "Nástroje – splněno:\n" + "\n".join(f"- {x}" for x in chosen) if chosen else "Zatím nic nezaškrtnuto."
+    st.download_button("⬇️ Stáhnout checklist nástrojů (TXT)", text, "nastroje-checklist.txt")
+
 
     st.divider()
 
