@@ -250,20 +250,54 @@ def page_portfolio():
             st.write("\n".join(body[fokus]))
             
 def page_kviz():
-    st.header("🧩 Mini kvíz")
-    odp = st.radio(
-        "Co je Pull Request (PR) na GitHubu?",
+    st.header("🧩 Mini kvíz – pohovorové otázky")
+
+    # Q1 Verifikace vs Validace
+    q1 = st.radio(
+        "1) Jaký je rozdíl mezi verifikací a validací?",
         [
-            "Přímé nahrání kódu do main",
-            "Návrh změn z větve, který ostatní zkontrolují a sloučí",
-            "Záloha repozitáře",
+            "Verifikace = proti potřebám uživatele, Validace = proti specifikaci",
+            "Verifikace = proti specifikaci, Validace = proti potřebám uživatele",
+            "Žádný rozdíl",
         ],
+        index=None,
     )
+
+    # Q2 Regresní testy
+    q2 = st.radio(
+        "2) Co je regresní testování?",
+        [
+            "Ověření, že opravy a nové funkce nerozbily starou funkčnost",
+            "Testy výkonu pod zátěží",
+            "Rychlé ověření, že konkrétní funkčnost funguje",
+        ],
+        index=None,
+    )
+
+    # Q3 Severity vs Priority
+    q3 = st.radio(
+        "3) Jaký je rozdíl mezi severity a priority?",
+        [
+            "Severity = dopad na systém, Priority = kdy opravit",
+            "Severity = kdo chybu nahlásil, Priority = kolik uživatelů ji má",
+            "Žádný rozdíl",
+        ],
+        index=None,
+    )
+
+    # Tlačítko vyhodnocení
     if st.button("Vyhodnotit"):
-        if odp == "Návrh změn z větve, který ostatní zkontrolují a sloučí":
-            st.success("Správně! 👍")
-        else:
-            st.error("Ještě jednou: PR je návrh změn z větve, který se po schválení mergne do main.")
+        score = 0
+        if q1 == "Verifikace = proti specifikaci, Validace = proti potřebám uživatele":
+            score += 1
+        if q2 == "Ověření, že opravy a nové funkce nerozbily starou funkčnost":
+            score += 1
+        if q3 == "Severity = dopad na systém, Priority = kdy opravit":
+            score += 1
+
+        st.success(f"Skóre: {score}/3")
+        if score == 3:
+            st.balloons()
 
 def page_timeline():
     st.header("🗓️ Doporučená timeline")
