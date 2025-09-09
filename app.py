@@ -7,6 +7,27 @@ import streamlit.components.v1 as components  # <- DŮLEŽITÉ pro práci s URL/
 # ========== ZÁKLADNÍ NASTAVENÍ APPKY ==========
 st.set_page_config(page_title="Jak se stát testerem", page_icon="🐞", layout="wide")
 
+import streamlit as st
+# ... ostatní importy
+
+st.set_page_config(page_title="Jak se stát testerem", page_icon="✅", layout="wide")
+
+# ⬇️ SEM VLOŽ GLOBÁLNÍ CSS NA ŠÍŘKU OBSAHU
+st.markdown("""
+<style>
+/* rozšíření hlavního kontejneru pro všechny stránky */
+.block-container {
+  max-width: 1600px;      /* klidně změň na 1400/1500/100% */
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+</style>
+""", unsafe_allow_html=True)
+
+# (pak může zůstat tvůj existující CSS pro sidebar, menu atd.)
+# st.markdown("""<style> ... sidebar styly ... </style>""", unsafe_allow_html=True)
+
+
 # ========== STYLY (větší titulek a čitelnější menu v sidebaru) ==========
 st.markdown("""
 <style>
