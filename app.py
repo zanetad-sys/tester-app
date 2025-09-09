@@ -47,25 +47,47 @@ def percent():
     return int(100 * sum(d.values()) / len(d)) if d else 0
 
 # ========== MENU V SIDEBARU ==========
-# Vlastní velký titulek (klikací radio necháváme bez labelu)
-st.sidebar.markdown("<h2>📚 Navigace</h2>", unsafe_allow_html=True)
 
-menu = st.sidebar.radio(
-    "",
-    [
-        "Úvod",
-        "Základy",
-        "Nástroje",
-        "Portfolio",
-        "Mini kvíz",
-        "Timeline",
-        "Zdroje",
-        "📖 Teorie",
-        "🧭 QA tahák",
-        "🌐 API tester",
-    ],
-    index=0,
-)
+# 1) Tituly sekcí a jejich slugy do URL
+PAGES = [
+    ("Úvod", "uvod"),
+    ("Základy", "zaklady"),
+    ("Nástroje", "nastroje"),
+    ("Portfolio", "portfolio"),
+    ("Mini kvíz", "mini-kviz"),
+    ("Timeline", "timeline"),
+    ("Zdroje", "zdroje"),
+    ("📖 Teorie", "teorie"),
+    ("🧭 QA tahák", "qa-tahak"),
+    ("🌐 API tester", "api-tester"),
+]
+titles = [t for t, _ in PAGES]
+slugs = {t: s for t, s in PAGES}
+from_slug = {s: t for t, s in PAGES}
+
+# 2) Načti slug z URL (pokud tam není, nastav default = uvod)
+try:
+    qp = st.query_params
+    current_slug = qp.get("page", ["uvod"])[0]
+except Exception:
+    qp = st.experimental_get_query_params()
+    current_slug = qp.get("page", ["uvod"])[0]
+
+# 3) Urči defaultní index podle URL
+default_title = from_slug.get(current_slug, "Úvod")
+default_index = titles.index(default_title)
+
+# 4) Sidebar s velkým titulkem
+st.sidebar.markdown("<h2>📚 Navigace</h2>", unsafe_allow_html=True)
+menu = st.sidebar.radio("", titles, index=default_index)
+
+# 5) Ulož slug do URL (aby se vždy zobrazil správný ?page=...)
+chosen_slug = slugs[menu]
+try:
+    st.query_params["page"] = chosen_slug
+except Exception:
+    st.experimental_set_query_params(page=chosen_slug)
+
 
 # ========== STRÁNKY ==========
 def page_uvod():
