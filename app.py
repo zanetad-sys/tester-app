@@ -324,46 +324,64 @@ def page_timeline():
 def page_zdroje():
     st.header("📚 Užitečné zdroje")
 
-    zdroje = pd.DataFrame(
-        {
-            "Téma": [
-                "Manuální testování",
-                "Teorie testování (ISTQB základy)",
-                "SQL základy",
-                "Git a verzování",
-                "API testování",
-                "Automatizace testů (Python, Playwright, pytest)",
-                "Automatizace testů (Selenium)",
-                "CI/CD a DevOps",
-                "Agile / Scrum metodiky",
-                "Nástroje – Jira, TestRail, Confluence",
-                "Prohlížečové DevTools",
-                "Linux / CLI základy",
-                "Networking (HTTP, DNS, IP)",
-                "Security základy pro QA",
-                "Streamlit / Python projekty",
-            ],
-            "Odkaz": [
-                "[Practice QA web](https://practice-qa.com) / [DemoQA](https://demoqa.com)",
-                "[ISTQB sylabus PDF](https://www.istqb.org/certifications/certified-tester-foundation-level)",
-                "[SQLZoo](https://sqlzoo.net/) / [W3Schools SQL](https://www.w3schools.com/sql/)",
-                "[GitHub Learning Lab](https://lab.github.com/) / [Pro Git Book](https://git-scm.com/book/en/v2)",
-                "[Postman Learning Center](https://learning.postman.com/) / [JSONPlaceholder API](https://jsonplaceholder.typicode.com/)",
-                "[Playwright docs](https://playwright.dev/python/docs/intro) / [pytest docs](https://docs.pytest.org/en/stable/)",
-                "[Selenium docs](https://www.selenium.dev/documentation/)",
-                "[GitHub Actions](https://docs.github.com/en/actions) / [Jenkins Pipeline Tutorial](https://www.jenkins.io/doc/pipeline/tour/hello-world/)",
-                "[Scrum Guide](https://scrumguides.org/) / [Atlassian Agile Coach](https://www.atlassian.com/agile)",
-                "[Jira Software Guide](https://www.atlassian.com/software/jira/guides) / [TestRail intro](https://www.gurock.com/testrail/) / [Confluence](https://www.atlassian.com/software/confluence)",
-                "[Chrome DevTools Guide](https://developer.chrome.com/docs/devtools/)",
-                "[Linux Journey](https://linuxjourney.com/) / [OverTheWire Bandit](https://overthewire.org/wargames/bandit/)",
-                "[MDN HTTP Basics](https://developer.mozilla.org/en-US/docs/Web/HTTP) / [What is DNS](https://howdns.works/)",
-                "[OWASP Top 10](https://owasp.org/www-project-top-ten/) / [PortSwigger Academy](https://portswigger.net/web-security)",
-                "[Streamlit docs](https://docs.streamlit.io/) / [Awesome Streamlit](https://awesome-streamlit.org/)",
-            ],
-        }
-    )
+    st.markdown("""
+### Manuální testování
+- [Practice QA web](https://practice-qa.com)  
+- [DemoQA](https://demoqa.com)
 
-    st.dataframe(zdroje, use_container_width=True)
+### Teorie testování (ISTQB základy)
+- [ISTQB sylabus PDF](https://www.istqb.org/certifications/certified-tester-foundation-level)
+
+### SQL základy
+- [SQLZoo](https://sqlzoo.net/)  
+- [W3Schools SQL](https://www.w3schools.com/sql/)
+
+### Git a verzování
+- [GitHub Learning Lab](https://lab.github.com/)  
+- [Pro Git Book](https://git-scm.com/book/en/v2)
+
+### API testování
+- [Postman Learning Center](https://learning.postman.com/)  
+- [JSONPlaceholder API](https://jsonplaceholder.typicode.com/)
+
+### Automatizace testů
+- [Playwright docs](https://playwright.dev/python/docs/intro)  
+- [pytest docs](https://docs.pytest.org/en/stable/)  
+- [Selenium docs](https://www.selenium.dev/documentation/)
+
+### CI/CD a DevOps
+- [GitHub Actions](https://docs.github.com/en/actions)  
+- [Jenkins Pipeline Tutorial](https://www.jenkins.io/doc/pipeline/tour/hello-world/)
+
+### Agile / Scrum
+- [Scrum Guide](https://scrumguides.org/)  
+- [Atlassian Agile Coach](https://www.atlassian.com/agile)
+
+### Nástroje
+- [Jira Software Guide](https://www.atlassian.com/software/jira/guides)  
+- [TestRail intro](https://www.gurock.com/testrail/)  
+- [Confluence](https://www.atlassian.com/software/confluence)
+
+### Prohlížečové DevTools
+- [Chrome DevTools Guide](https://developer.chrome.com/docs/devtools/)
+
+### Linux / CLI
+- [Linux Journey](https://linuxjourney.com/)  
+- [OverTheWire Bandit](https://overthewire.org/wargames/bandit/)
+
+### Networking
+- [MDN HTTP Basics](https://developer.mozilla.org/en-US/docs/Web/HTTP)  
+- [How DNS works](https://howdns.works/)
+
+### Security základy
+- [OWASP Top 10](https://owasp.org/www-project-top-ten/)  
+- [PortSwigger Academy](https://portswigger.net/web-security)
+
+### Python & projekty
+- [Streamlit docs](https://docs.streamlit.io/)  
+- [Awesome Streamlit](https://awesome-streamlit.org/)
+""", unsafe_allow_html=True)
+
     st.info("💡 Tip: odkazy se ti otevřou v novém okně.")
 
 def page_teorie():
