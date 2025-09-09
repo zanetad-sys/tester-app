@@ -191,12 +191,12 @@ def page_teorie():
     st.header("📖 Základní teorie testování")
 
     st.subheader("Typy testů")
-    st.markdown(""""
+    st.markdown("""
 - **Funkční ** vs. **Nefunkční**  
 - **Funkční testy**, **Smoke - základní ověření, že aplikace vůbec běží**, **Sanity - rychlé ověření, že konkrétní funkčnost funguje po změně**, **Regresní - ověření, že opravy/nové funkce nerozbily stará funkce**, **Exploratory testing - neformální testování bez scénáře, hledání neočekávaných chyb**,  **Ad-Hoc testing - nahodilé testování bez přípravy, spíše intuitivní**, **End-to-End testing - ověřuje celý proces př. od registrace po nákup**
-- **Nefunkční testy**, **Performance testy - rychlost odezvy**, **Load Testing - výkon při zátěži**, **Stress testy - chování systému při extrémní zátěži**, **Usability testy - uživatelská přívětivost**, **ecurity testy - odolnost vůči útokům (sql injection, XSS)**, **Compability testy - funkčnost v různých prohlížečích, zařízeních. OS**, **Recovery testy - chování při pádu systému a jeho obnova po výpadku**
-- ** Úrovně testování**, **Jednotkové (unit)- testuje jednotlivé části kódu (metody, funkce, třídy), ověřit, že nejmenší jednotky fungují správně**, **Integrační - testuje propojení mezi moduly v rozhraní př. Frontend-API**, **Systémové - testuje se celý systém jako celek, obsahuje funkční i nefunkční testy(ověřit zda splňuje požadavky)**, **Akceptační - testuje klient nebo koncový uživatel, testuje realné scénáře použití, cílem je potvrdit, že je aplikac epřipravená k nasazení**
-"""")
+- **Nefunkční testy**, **Performance testy - rychlost odezvy**, **Load Testing - výkon při zátěži**, **Stress testy - chování systému při extrémní zátěži**, **Usability testy - uživatelská přívětivost**, **Security testy - odolnost vůči útokům (sql injection, XSS)**, **Compatibility testy - funkčnost v různých prohlížečích, zařízeních. OS**, **Recovery testy - chování při pádu systému a jeho obnova po výpadku**
+- ** Úrovně testování**, **Jednotkové (unit)- testuje jednotlivé části kódu (metody, funkce, třídy), ověřit, že nejmenší jednotky fungují správně**, **Integrační - testuje propojení mezi moduly v rozhraní př. Frontend-API**, **Systémové - testuje se celý systém jako celek, obsahuje funkční i nefunkční testy(ověřit zda splňuje požadavky)**, **Akceptační - testuje klient nebo koncový uživatel, testuje realné scénáře použití, cílem je potvrdit, že je aplikace připravená k nasazení**
+""")
 
     st.subheader("Verifikace vs. Validace")
     st.markdown("""
