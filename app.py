@@ -239,7 +239,7 @@ def page_nastroje():
         )
     with c2:
         st.session_state.done["tools_testmgmt"] = st.checkbox(
-            "Test management: TestRail / Xray / Zephyr / Azure DevOps / (i Excel/Sheets)",
+            "Test management: TestRail / Xray / Zephyr / Azure DevOps / Excel/Sheets",
             value=st.session_state.done.get("tools_testmgmt", False)
         )
     with st.expander("🎓 Tipy – workflow & reporty"):
@@ -302,7 +302,7 @@ git push -u origin feat/x
     c1, c2, c3, c4 = st.columns(4)
     with c1:
         st.session_state.done["tools_python"] = st.checkbox(
-            "Python / (Java/JS dle firmy)",
+            "Python / Java/JS (dle firmy)",
             value=st.session_state.done.get("tools_python", False)
         )
     with c2:
@@ -663,18 +663,107 @@ def page_timeline():
     st.table(timeline)
 
 def page_zdroje():
-    st.header("📚 Užitečné zdroje")
-    zdroje = pd.DataFrame(
-        {
-            "Téma": ["Git", "Postman (API)", "Playwright", "Streamlit"],
-            "Tip": [
-                "Procházej vlastní repozitáře a dělej malé commity.",
-                "Trénuj collection + environment + test scripts.",
-                "Začni s UI testy, pak přidej fixtures a parametrizaci.",
-                "Rychlé prototypy a dashboardy – tak jako tahle appka!",
-            ],
-        }
-    )
+    st.header("📚 Užitečné zdroje – kurátorský seznam")
+
+    st.markdown("#### Git & GitHub")
+    st.markdown("""
+- [Pro Git (kniha zdarma)](https://git-scm.com/book/en/v2)  
+- [Atlassian Git Tutorials (větve, rebase, workflow)](https://www.atlassian.com/git)  
+- [GitHub Docs – Pull Requests](https://docs.github.com/pull-requests)  
+- [Oh My Git! (interaktivní hra)](https://ohmygit.org/)  
+- [Learn Git Branching (vizuální trénink větví)](https://learngitbranching.js.org/)
+""")
+
+    st.markdown("#### Markdown, README, dokumentace")
+    st.markdown("""
+- [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/)  
+- [Readme.so (WYSIWYG editor README)](https://readme.so/)
+""")
+
+    st.markdown("#### Web základy (HTML/CSS/JS)")
+    st.markdown("""
+- [MDN Web Docs – HTML](https://developer.mozilla.org/docs/Web/HTML)  
+- [MDN Web Docs – CSS](https://developer.mozilla.org/docs/Web/CSS)  
+- [MDN Web Docs – JavaScript](https://developer.mozilla.org/docs/Web/JavaScript)  
+- [Flexbox Froggy (hra na layout)](https://flexboxfroggy.com/)  
+- [Grid Garden (CSS Grid)](https://cssgridgarden.com/)
+""")
+
+    st.markdown("#### SQL & databáze")
+    st.markdown("""
+- [SQLBolt (interaktivní lekce)](https://sqlbolt.com/)  
+- [Mode SQL Tutorial (praktické dotazy)](https://mode.com/sql-tutorial/)  
+- [PostgreSQL Tutorial](https://www.postgresql.org/docs/)  
+- [Database Normalization (přehled)](https://www.guru99.com/database-normalization.html)
+""")
+
+    st.markdown("#### API, HTTP & Postman")
+    st.markdown("""
+- [HTTP status codes – přehled](https://httpstatuses.com/)  
+- [Postman Learning Center](https://learning.postman.com/)  
+- [JSONPlaceholder (testovací REST API)](https://jsonplaceholder.typicode.com/)  
+- [Swagger Petstore (OpenAPI demo)](https://petstore.swagger.io/)  
+- [SOAP UI – dokumentace](https://www.soapui.org/)
+""")
+
+    st.markdown("#### Python, testy a automatizace")
+    st.markdown("""
+- [Python Tutorial (oficiální)](https://docs.python.org/3/tutorial/)  
+- [pytest – dokumentace](https://docs.pytest.org/)  
+- [Playwright for Python](https://playwright.dev/python/)  
+- [Selenium Docs](https://www.selenium.dev/documentation/)  
+- [Awesome Python Testing (sbírka zdrojů)](https://github.com/atinfo/awesome-test-automation)
+""")
+
+    st.markdown("#### DevTools, logy, Linux")
+    st.markdown("""
+- [Chrome DevTools – Overview](https://developer.chrome.com/docs/devtools)  
+- [Logy v Linuxu (journald)](https://www.freedesktop.org/software/systemd/man/latest/journalctl.html)  
+- [Explainshell (co dělá příkaz)](https://explainshell.com/)
+""")
+
+    st.markdown("#### CI/CD")
+    st.markdown("""
+- [GitHub Actions – docs](https://docs.github.com/actions)  
+- [GitLab CI/CD – docs](https://docs.gitlab.com/ee/ci/)
+""")
+
+    st.markdown("#### Docker & prostředí")
+    st.markdown("""
+- [Docker – Get Started](https://docs.docker.com/get-started/)  
+- [Play with Docker (online sandbox)](https://labs.play-with-docker.com/)
+""")
+
+    st.markdown("#### Bezpečnost & výkon")
+    st.markdown("""
+- [PortSwigger Web Security Academy (XSS, SQLi…)](https://portswigger.net/web-security)  
+- [OWASP Top 10 (nejčastější rizika)](https://owasp.org/www-project-top-ten/)  
+- [k6 – performance testing](https://k6.io/docs/)  
+- [Apache JMeter – User Manual](https://jmeter.apache.org/usermanual/)
+""")
+
+    st.markdown("#### Streamlit")
+    st.markdown("""
+- [Streamlit – dokumentace](https://docs.streamlit.io/)  
+- [Gallery (inspirace aplikací)](https://streamlit.io/gallery)
+""")
+
+    # Volitelně: stáhnout si seznam jako Markdown
+    resources_md = """
+# Užitečné zdroje (QA starter pack)
+- Git & GitHub: Pro Git, Atlassian Git Tutorials, PR workflow…
+- Web: MDN (HTML/CSS/JS), Flexbox Froggy, Grid Garden
+- SQL: SQLBolt, Mode SQL, Normalizace
+- API: HTTP status codes, Postman LC, Swagger Petstore, JSONPlaceholder
+- Python/Testing: Python tutorial, pytest, Playwright, Selenium
+- DevTools/Logy: Chrome DevTools, journald
+- CI/CD: GitHub Actions, GitLab CI
+- Docker: Get Started, Play with Docker
+- Security/Performance: PortSwigger Academy, OWASP Top 10, k6, JMeter
+- Streamlit: Docs, Gallery
+"""
+    st.download_button("⬇️ Stáhnout seznam zdrojů (Markdown)", resources_md, file_name="uzitecne-zdroje.md")
+
     st.dataframe(zdroje, use_container_width=True)
 
 def page_teorie():
