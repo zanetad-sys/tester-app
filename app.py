@@ -3,21 +3,28 @@ import streamlit as st
 import pandas as pd
 import requests
 
+# ========== ZÁKLADNÍ NASTAVENÍ APPKY ==========
 st.set_page_config(page_title="Jak se stát testerem", page_icon="✅", layout="wide")
 
-# >>> sem vlož CSS snippet <<<
-st.markdown(
-    """
-    <style>
-    [data-testid="stSidebar"] h2 {
-        font-size: 22px !important;   /* zvětšení písma */
-        font-weight: bold;
-        margin-bottom: 15px;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+# ========== STYLY (větší titulek a čitelnější menu v sidebaru) ==========
+st.markdown("""
+<style>
+/* Velký tučný nadpis pro Navigaci v sidebaru */
+[data-testid="stSidebar"] h2 {
+    font-size: 22px !important;
+    font-weight: 700 !important;
+    margin: 0 0 10px 0 !important;
+}
+
+/* Větší rozestupy a font pro radio položky v sidebaru */
+[data-testid="stSidebar"] [role="radiogroup"] > label {
+    padding: 6px 0 !important;
+}
+[data-testid="stSidebar"] [role="radiogroup"] p {
+    font-size: 16px !important;
+}
+</style>
+""", unsafe_allow_html=True)
 
 # ========== STAV (checkboxy) ==========
 if "done" not in st.session_state:
@@ -40,8 +47,11 @@ def percent():
     return int(100 * sum(d.values()) / len(d)) if d else 0
 
 # ========== MENU V SIDEBARU ==========
+# Vlastní velký titulek (klikací radio necháváme bez labelu)
+st.sidebar.markdown("<h2>📚 Navigace</h2>", unsafe_allow_html=True)
+
 menu = st.sidebar.radio(
-    "📚 Navigace",   # tenhle text se teď zobrazí větším písmem
+    "",
     [
         "Úvod",
         "Základy",
