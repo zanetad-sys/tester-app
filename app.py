@@ -248,8 +248,7 @@ def page_portfolio():
             }
             st.success((f"{jmeno}, " if jmeno else "") + f"tvůj plán na {hodin} h/týden:")
             st.write("\n".join(body[fokus]))
-
-
+            
 def page_kviz():
     st.header("🧩 Mini kvíz")
     odp = st.radio(
