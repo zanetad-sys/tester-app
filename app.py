@@ -512,41 +512,68 @@ def page_qatahaky():
     st.write("""
 - **Cíl & rozsah**, **Rizika/priorita**, **Prostředí & data**, **DoD**
 """)
+
     st.markdown("### 2) Návrh testů")
     st.write("""
 - Techniky: ekvivalence, hranice, stavové přechody, pairwise  
 - Úrovně: unit/API/UI; typy: funkční, negativní, regresní, smoke  
 - Minimal viable set: nejdřív **smoke**, pak kritické cesty, pak okraje  
 """)
+
     st.markdown("### 3) Provedení")
     st.write("""
 - Scripted + Exploratory ~ 70/30 (timebox 30–60 min)  
 - Evidence: PASS/FAIL, screenshot/log/HAR u failů  
 - Verzování: drž v Gitu (README, `tests/`, `testcases.xlsx`)  
 """)
+
+    # ---------- Bug report šablona ----------
     st.markdown("### 4) Bug report – šablona")
     bug = """Název: [Checkout] 500 při prázdném košíku
 Prostředí: test, v1.2.3 (build #456), Chrome 127
-Kroky: 1) Otevřít /checkout 2) Kliknout „Zaplatit“ s prázdným košíkem
+Kroky: 1) Otevřít /checkout  2) Kliknout „Zaplatit“ s prázdným košíkem
 Očekávané: Validace „Košík je prázdný“
 Aktuální: HTTP 500, bílá stránka
 Důkazy: screenshot.png, network.har
-Sev/Pri: High / P1  Pozn.: Regrese od v1.2.2
+Závažnost/Priorita: High / P1
+Poznámka: Regrese od v1.2.2
+Status: NEW
 """
     st.code(bug, language="markdown")
     st.download_button("⬇️ Stáhnout Bug report", bug, file_name="bug-report.md")
 
-    st.markdown("### Test case – šablona")
+    # ---------- Test case šablona (opraveno) ----------
+    st.markdown("### 5) Test case – šablona")
     tc = """ID: TC-LOGIN-001
-Cíl: Přihlášení validního uživatele
-Kroky: 1) Otevřít /login  2) Vyplnit platné údaje  3) Odeslat
-Očekávané: Přesměrování na /dashboard
-Priorita: P1  Data: user@test.com / *****  Stav: PASS/FAIL
+Název: Přihlášení validního uživatele
+Cíl: Ověřit, že uživatel s platnými údaji se úspěšně přihlásí
+Prostředí: test, v1.2.3 (build #456), Chrome 127
+Požadavky/Trace: REQ-LOGIN-001
+Předpoklady / Data: user@test.com / *****
+
+Kroky:
+  1) Otevřít /login
+  2) Vyplnit platné údaje
+  3) Odeslat formulář
+
+Očekávaný výsledek:
+  - Uživatel je přesměrován na /dashboard
+  - Zobrazí se uživatelské jméno v headeru
+
+Aktuální výsledek:
+  - [doplnit po provedení testu]
+
+Status: NOT RUN / PASS / FAIL / BLOCKED
+Priorita: P1
+Tagy: @smoke @regression
+Evidence: screenshot.png, log.txt, network.har
+Poznámky: 
 """
     st.code(tc, language="markdown")
     st.download_button("⬇️ Stáhnout Test Case", tc, file_name="test-case.md")
 
-    st.markdown("### PR checklist")
+    # ---------- PR checklist ----------
+    st.markdown("### 6) PR checklist")
     pr = """PR checklist:
 - [ ] Projde lokální smoke
 - [ ] Test data/seed aktualizovány
@@ -556,6 +583,14 @@ Priorita: P1  Data: user@test.com / *****  Stav: PASS/FAIL
 """
     st.code(pr, language="markdown")
     st.download_button("⬇️ Stáhnout PR checklist", pr, file_name="pr-checklist.md")
+
+    with st.expander("Legenda statusů pro test case"):
+        st.markdown("""
+- **NOT RUN** – test zatím neproběhl  
+- **PASS** – očekávané = aktuální  
+- **FAIL** – odchylka od očekávaného výsledku  
+- **BLOCKED** – test nelze provést (závislost, prostředí, blocker bug)
+""")
 
 def page_api_tester():
     st.header("🌐 API dokumentace + rychlý tester")
