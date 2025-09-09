@@ -223,12 +223,12 @@ def page_nastroje():
     with c1:
         st.session_state.done["tools_jira"] = st.checkbox(
             "Jira / Trello / Asana / Bugzilla – evidence úkolů a bugů",
-            value=st.session_state.done["tools_jira"]
+            value=st.session_state.done.get("tools_jira", False)
         )
     with c2:
         st.session_state.done["tools_testmgmt"] = st.checkbox(
             "Test management: TestRail / Xray / Zephyr / Azure DevOps / (i Excel/Sheets)",
-            value=st.session_state.done["tools_testmgmt"]
+            value=st.session_state.done.get("tools_testmgmt", False)
         )
     with st.expander("🎓 Tipy – workflow & reporty"):
         st.markdown("""
