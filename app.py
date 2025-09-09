@@ -58,23 +58,161 @@ def page_uvod():
         st.info("Tip: Používej menu vlevo. Každá sekce se zobrazí tady v hlavní části.")
 
 def page_zaklady():
-    st.header("1) Základy")
-    st.session_state.done["manual_vs_auto"] = st.checkbox(
-        "Rozdíl: manuální vs. automatizované testování",
-        value=st.session_state.done["manual_vs_auto"],
+    st.header("1) Základy QA – kompletní přehled")
+
+    # ============ BLOK 1: Co je QA =============
+    st.subheader("🎯 Co je QA a role testera")
+    st.session_state.done["qa_definition"] = st.checkbox(
+        "Co je testování / QA",
+        value=st.session_state.done.get("qa_definition", False),
     )
-    st.session_state.done["web_basics"] = st.checkbox(
-        "Základy webu (HTML/CSS/JS)",
-        value=st.session_state.done["web_basics"],
+    st.session_state.done["qa_roles"] = st.checkbox(
+        "Role: tester vs. vývojář vs. produkták",
+        value=st.session_state.done.get("qa_roles", False),
     )
-    st.session_state.done["sql"] = st.checkbox(
-        "Základy SQL",
-        value=st.session_state.done["sql"],
+    st.session_state.done["qa_sdlc"] = st.checkbox(
+        "Životní cyklus vývoje softwaru (SDLC, agilní, waterfall)",
+        value=st.session_state.done.get("qa_sdlc", False),
     )
-    st.session_state.done["git"] = st.checkbox(
-        "Verzování (Git) a GitHub",
-        value=st.session_state.done["git"],
+    st.session_state.done["qa_types"] = st.checkbox(
+        "Typy testů – úrovně (unit, integrační, systémové, akceptační)",
+        value=st.session_state.done.get("qa_types", False),
     )
+    st.session_state.done["qa_vv"] = st.checkbox(
+        "Rozdíl mezi verifikací a validací",
+        value=st.session_state.done.get("qa_vv", False),
+    )
+    st.session_state.done["qa_sevpri"] = st.checkbox(
+        "Severity vs. priorita bugů",
+        value=st.session_state.done.get("qa_sevpri", False),
+    )
+
+    with st.expander("📖 Vysvětlivky – QA základy"):
+        st.markdown("""
+- **QA** = zajištění kvality (procesy + testování).  
+- **Role testera** = hledá chyby, přemýšlí za uživatele, zajišťuje, že produkt odpovídá požadavkům.  
+- **SDLC** = waterfall (fáze po sobě) vs. agile (Scrum, iterace).  
+- **Verifikace** = děláme věci správně, **Validace** = děláme správné věci.  
+- **Severity** = dopad chyby, **Priorita** = jak rychle ji opravit.
+""")
+
+    st.divider()
+
+    # ============ BLOK 2: Technické minimum ============
+    st.subheader("🖥️ Technické minimum")
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.session_state.done["tech_web"] = st.checkbox(
+            "Web (HTML, CSS, JS)", value=st.session_state.done.get("tech_web", False)
+        )
+        st.session_state.done["tech_sql"] = st.checkbox(
+            "Databáze + SQL", value=st.session_state.done.get("tech_sql", False)
+        )
+    with col2:
+        st.session_state.done["tech_git"] = st.checkbox(
+            "Git/GitHub", value=st.session_state.done.get("tech_git", False)
+        )
+        st.session_state.done["tech_logs"] = st.checkbox(
+            "Logy (application/system/security)",
+            value=st.session_state.done.get("tech_logs", False),
+        )
+    with col3:
+        st.session_state.done["tech_http"] = st.checkbox(
+            "HTTP/HTTPS základy", value=st.session_state.done.get("tech_http", False)
+        )
+        st.session_state.done["tech_api"] = st.checkbox(
+            "API (REST/JSON, SOAP/XML)",
+            value=st.session_state.done.get("tech_api", False),
+        )
+
+    with st.expander("📖 Vysvětlivky – Technické minimum"):
+        st.markdown("""
+- **Web** = HTML struktura, CSS styly, JS logika.  
+- **SQL** = SELECT, JOIN, INSERT, UPDATE, klíče.  
+- **Git** = commit, push, pull request.  
+- **Logy** = application (chyby appky), system (OS, služby), security (přihlášení).  
+- **HTTP** = request/response, status kódy (200, 404, 500).  
+- **API** = REST (JSON, lehké), SOAP (XML, enterprise).
+""")
+
+    st.divider()
+
+    # ============ BLOK 3: Praktické nástroje ============
+    st.subheader("🛠️ Praktické nástroje")
+    st.session_state.done["tools_bugtracking"] = st.checkbox(
+        "Bug tracking (Jira, Trello, Bugzilla)",
+        value=st.session_state.done.get("tools_bugtracking", False),
+    )
+    st.session_state.done["tools_testmgmt"] = st.checkbox(
+        "Test management (TestRail, Xray, Excel šablony)",
+        value=st.session_state.done.get("tools_testmgmt", False),
+    )
+    st.session_state.done["tools_postman"] = st.checkbox(
+        "Postman (API testing) / SOAP UI",
+        value=st.session_state.done.get("tools_postman", False),
+    )
+    st.session_state.done["tools_devtools"] = st.checkbox(
+        "DevTools v prohlížeči (network, console, cookies)",
+        value=st.session_state.done.get("tools_devtools", False),
+    )
+
+    with st.expander("📖 Vysvětlivky – Praktické nástroje"):
+        st.markdown("""
+- **Jira/Trello** = evidence úkolů a bugů.  
+- **TestRail/Xray/Excel** = správa testů a výsledků.  
+- **Postman/SOAP UI** = testování API.  
+- **DevTools** = prohlížení síťových požadavků, logů a cookies.
+""")
+
+    st.divider()
+
+    # ============ BLOK 4: Automatizace + Bonus ============
+    st.subheader("🤖 Automatizace + Bonus")
+    st.session_state.done["auto_python"] = st.checkbox(
+        "Základy Pythonu/jiného jazyka",
+        value=st.session_state.done.get("auto_python", False),
+    )
+    st.session_state.done["auto_framework"] = st.checkbox(
+        "Framework (pytest, Playwright, Selenium)",
+        value=st.session_state.done.get("auto_framework", False),
+    )
+    st.session_state.done["auto_ci"] = st.checkbox(
+        "Principy CI/CD (GitHub Actions, GitLab CI)",
+        value=st.session_state.done.get("auto_ci", False),
+    )
+    st.session_state.done["bonus_security"] = st.checkbox(
+        "Základy bezpečnostního testování (XSS, SQLi)",
+        value=st.session_state.done.get("bonus_security", False),
+    )
+    st.session_state.done["bonus_performance"] = st.checkbox(
+        "Performance testy (JMeter, k6 – teorie)",
+        value=st.session_state.done.get("bonus_performance", False),
+    )
+    st.session_state.done["bonus_cloud"] = st.checkbox(
+        "Cloud/prostředí (docker, staging vs. prod)",
+        value=st.session_state.done.get("bonus_cloud", False),
+    )
+    st.session_state.done["bonus_linux"] = st.checkbox(
+        "Základy Linux shellu (navigace, grep, logy)",
+        value=st.session_state.done.get("bonus_linux", False),
+    )
+
+    with st.expander("📖 Vysvětlivky – Automatizace a Bonus"):
+        st.markdown("""
+- **Python/Java** = základní syntaxe, funkce, testovací skripty.  
+- **Pytest/Playwright/Selenium** = frameworky pro automatizaci.  
+- **CI/CD** = kontinuální integrace a nasazování (např. GitHub Actions).  
+- **Security** = základní útoky jako XSS, SQLi na demo aplikacích.  
+- **Performance** = JMeter, k6 pro zátěžové testy.  
+- **Cloud** = docker, prostředí dev/stage/prod.  
+- **Linux** = práce v shellu, logy, grep.
+""")
+
+    # Checklist download
+    all_items = [k for k, v in st.session_state.done.items() if k.startswith(("qa_", "tech_", "tools_", "auto_", "bonus_"))]
+    checklist = "\n".join(f"- {k}" for k in all_items)
+    st.download_button("⬇️ Stáhnout checklist všech základů", checklist, "qa-zaklady-checklist.txt")
+
 
 def page_nastroje():
     st.header("2) Nástroje a praxe")
