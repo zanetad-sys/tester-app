@@ -3,6 +3,7 @@ import streamlit as st
 import pandas as pd
 import requests
 import streamlit.components.v1 as components
+from typing import Optional
 
 # ===================== ZÁKLADNÍ NASTAVENÍ =====================
 st.set_page_config(page_title="Jak se stát testerem", page_icon="🐞", layout="wide")
@@ -76,7 +77,7 @@ from_slug = {s: t for t, s in PAGES}
 try:
     qp = st.query_params
     current_slug = qp.get("page", "uvod")
-    if isinstance(current_slug, list):  # pro jistotu
+    if isinstance(current_slug, list):
         current_slug = current_slug[0]
 except Exception:
     qp = st.experimental_get_query_params()
@@ -97,8 +98,7 @@ try:
 except Exception:
     st.experimental_set_query_params(page=chosen_slug)
 
-# 5) Vyčisti hash v URL (zabíjí staré #bdd-...). Pokud chceš hash podle sekce,
-#    změň url.hash = "" na url.hash = "#%s" a použij % chosen_slug.
+# 5) Vyčisti hash v URL (zabíjí staré #bdd-...)
 components.html("""
 <script>
 (function () {
@@ -110,6 +110,67 @@ components.html("""
 })();
 </script>
 """, height=0)
+
+# ===================== HERO BANNER (helpers + vykreslení) =====================
+def hero_banner(title: str, subtitle: str = "", img_path: Optional[str] = None):
+    """Jednoduchý banner přes šířku s volitelným obrázkem vpravo."""
+    if img_path:
+        c1, c2 = st.columns([3, 1], vertical_alignment="center")
+        with c1:
+            st.markdown(
+                f"""
+                <div style="
+                  background:linear-gradient(90deg,#eef6ff 0%,#f8fbff 100%);
+                  border:1px solid rgba(0,0,0,.06);
+                  border-radius:16px; padding:18px 22px; margin:4px 0 16px 0;">
+                  <h2 style="margin:0">{title}</h2>
+                  <p style="margin:6px 0 0; color:#334; font-size:15px">{subtitle}</p>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+        with c2:
+            try:
+                st.image(img_path, use_column_width=True)
+            except Exception:
+                pass
+    else:
+        st.markdown(
+            f"""
+            <div style="
+              background:linear-gradient(90deg,#eef6ff 0%,#f8fbff 100%);
+              border:1px solid rgba(0,0,0,.06);
+              border-radius:16px; padding:18px 22px; margin:4px 0 16px 0;">
+              <h2 style="margin:0">{title}</h2>
+              <p style="margin:6px 0 0; color:#334; font-size:15px">{subtitle}</p>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+def show_banner_for(menu_title: str):
+    cfg = {
+        "Úvod": (
+            "Jak se stát testerem – mini průvodce",
+            "Postupně a v klidu. Základy a praxe. Zaškrtávej splněné kroky a sleduj postup.",
+            "assets/junior-software-tester.png",    # volitelné: vlastní obrázek
+        ),
+        "Základy": ("1) Základy", "Co je dobré znát na startu", None),
+        "Nástroje": ("2) Nástroje a praxe", "S čím budeš pracovat každý den", None),
+        "Portfolio": ("3) Portfolio a práce", "Co ukázat v žádosti a na pohovoru", "assets/junior-software-tester.png"),
+        "Mini kvíz": ("🧩 Mini kvíz – pohovorové otázky", "Krátké ověření teorie", None),
+        "Timeline": ("🗓️ Doporučená timeline", "Návrh postupu po týdnech", None),
+        "Zdroje": ("📚 Užitečné zdroje", "Linky, které se hodí do praxe", None),
+        "📖 Teorie": ("📖 Základní teorie testování", "Přehled pojmů a typů testů", None),
+        "🧭 QA tahák": ("🧭 QA tahák (proces + šablony)", "Rychlé šablony do práce", None),
+        "🌐 API tester": ("🌐 API dokumentace + rychlý tester", "Zkus si volání API rovnou v appce", None),
+    }
+    title, subtitle, img = cfg.get(menu_title, (menu_title, "", None))
+    hero_banner(title, subtitle, img)
+
+# vykresli banner pro vybranou sekci (objeví se nad obsahem stránky)
+show_banner_for(menu)
+
 
 # ===================== STRÁNKY =====================
 def page_uvod():
