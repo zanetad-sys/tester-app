@@ -5,6 +5,20 @@ import requests
 
 st.set_page_config(page_title="Jak se stát testerem", page_icon="✅", layout="wide")
 
+# >>> CSS snippet <<<
+st.markdown(
+    """
+    <style>
+    [data-testid="stSidebar"] h2 {
+        font-size: 22px !important;   /* zvětšení písma */
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 # ========== STAV (checkboxy) ==========
 if "done" not in st.session_state:
     st.session_state.done = {
