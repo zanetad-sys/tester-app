@@ -265,7 +265,8 @@ Obvykle ji určuje **Product Owner / Project Manager**.
 """)
     
 st.subheader("Bug vs. Defect vs. Failure")
-    st.markdown("""
+    
+st.markdown("""
 - **Bug** = chyba nalezená při testování.  
 - **Defect** = nesoulad se specifikací (většinou v kódu).  
 - **Failure** = projev chyby v běžícím systému.
