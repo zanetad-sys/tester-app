@@ -5,7 +5,7 @@ import requests
 
 st.set_page_config(page_title="Jak se stát testerem", page_icon="✅", layout="wide")
 
-# >>> CSS snippet <<<
+# >>> sem vlož CSS snippet <<<
 st.markdown(
     """
     <style>
@@ -41,7 +41,7 @@ def percent():
 
 # ========== MENU V SIDEBARU ==========
 menu = st.sidebar.radio(
-    "📚 Navigace",
+    "📚 Navigace",   # tenhle text se teď zobrazí větším písmem
     [
         "Úvod",
         "Základy",
