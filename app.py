@@ -2,9 +2,10 @@ import json
 import streamlit as st
 import pandas as pd
 import requests
+import streamlit.components.v1 as components  # <- DŮLEŽITÉ pro práci s URL/hash
 
 # ========== ZÁKLADNÍ NASTAVENÍ APPKY ==========
-st.set_page_config(page_title="Jak se stát testerem", page_icon="✅", layout="wide")
+st.set_page_config(page_title="Jak se stát testerem", page_icon="🐞", layout="wide")
 
 # ========== STYLY (větší titulek a čitelnější menu v sidebaru) ==========
 st.markdown("""
@@ -15,14 +16,9 @@ st.markdown("""
     font-weight: 700 !important;
     margin: 0 0 10px 0 !important;
 }
-
 /* Větší rozestupy a font pro radio položky v sidebaru */
-[data-testid="stSidebar"] [role="radiogroup"] > label {
-    padding: 6px 0 !important;
-}
-[data-testid="stSidebar"] [role="radiogroup"] p {
-    font-size: 16px !important;
-}
+[data-testid="stSidebar"] [role="radiogroup"] > label { padding: 6px 0 !important; }
+[data-testid="stSidebar"] [role="radiogroup"] p { font-size: 16px !important; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -46,9 +42,9 @@ def percent():
     d = st.session_state.done
     return int(100 * sum(d.values()) / len(d)) if d else 0
 
-# ========== MENU V SIDEBARU ==========
+# ========== MENU V SIDEBARU (s URL param & hash) ==========
 
-# 1) Tituly sekcí a jejich slugy do URL
+# 1) Tituly sekcí a jejich slugy do URL/hash
 PAGES = [
     ("Úvod", "uvod"),
     ("Základy", "zaklady"),
@@ -62,48 +58,44 @@ PAGES = [
     ("🌐 API tester", "api-tester"),
 ]
 titles = [t for t, _ in PAGES]
-slugs = {t: s for t, s in PAGES}
+slugs  = {t: s for t, s in PAGES}
 from_slug = {s: t for t, s in PAGES}
 
-# 2) Načti slug z URL (pokud tam není, nastav default = uvod)
+# 2) Načti slug z URL (?page=...), default = uvod
 try:
-    qp = st.query_params
+    qp = st.query_params                 # nové API
     current_slug = qp.get("page", ["uvod"])[0]
 except Exception:
-    qp = st.experimental_get_query_params()
+    qp = st.experimental_get_query_params()  # fallback pro starší verze
     current_slug = qp.get("page", ["uvod"])[0]
 
-# 3) Urči defaultní index podle URL
+# 3) Předvol index rádia podle URL
 default_title = from_slug.get(current_slug, "Úvod")
 default_index = titles.index(default_title)
 
-# 4) Sidebar s velkým titulkem
+# 4) Sidebar nadpis + radio
 st.sidebar.markdown("<h2>📚 Navigace</h2>", unsafe_allow_html=True)
 menu = st.sidebar.radio("", titles, index=default_index)
 
-# 5) Ulož slug do URL (aby se vždy zobrazil správný ?page=...)
-chosen_slug = slugs[menu]
-try:
-    st.query_params["page"] = chosen_slug
-except Exception:
-    st.experimental_set_query_params(page=chosen_slug)
-# 5) Ulož slug do URL (aby se vždy zobrazil správný ?page=...)
+# 5) Zapiš slug do URL jako ?page=...
 chosen_slug = slugs[menu]
 try:
     st.query_params["page"] = chosen_slug
 except Exception:
     st.experimental_set_query_params(page=chosen_slug)
 
-# 6) VYČISTI HASH (#...) Z URL, aby tam nezůstávalo třeba #bdd-...
-st.markdown("""
+# 6) Přepiš HASH v URL na aktuální sekci (#uvod, #teorie, ...)
+components.html(f"""
 <script>
-const url = new URL(window.location);
-if (url.hash) {
-  url.hash = "";
-  window.history.replaceState(null, "", url);
-}
+(function () {{
+  try {{
+    const url = new URL(window.parent.location.href);
+    url.hash = "#{chosen_slug}";             // pokud chceš hash úplně odstranit, dej: url.hash = "";
+    window.parent.history.replaceState(null, "", url.toString());
+  }} catch (e) {{}}
+}})();
 </script>
-""", unsafe_allow_html=True)
+""", height=0)
 
 # ========== STRÁNKY ==========
 def page_uvod():
