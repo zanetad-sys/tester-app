@@ -107,21 +107,68 @@ def page_zaklady():
 
 def page_nastroje():
     st.header("2) Nástroje a praxe")
+
+    # 🔹 Tracking úkolů a bugů
+    st.subheader("Tracking & správa")
     st.session_state.done["jira"] = st.checkbox(
-        "Jira/Trello – evidence úkolů",
+        "Jira / Trello – evidence úkolů a bugů",
         value=st.session_state.done["jira"],
     )
-    st.session_state.done["testcases"] = st.checkbox(
-        "Test cases a bug reporting",
-        value=st.session_state.done["testcases"],
+    st.session_state.done["testrail"] = st.checkbox(
+        "TestRail / Zephyr – správa test cases",
+        value=st.session_state.done.get("testrail", False),
     )
+    st.session_state.done["confluence"] = st.checkbox(
+        "Confluence / Notion – dokumentace",
+        value=st.session_state.done.get("confluence", False),
+    )
+
+    # 🔹 API testování
+    st.subheader("API testování")
     st.session_state.done["api"] = st.checkbox(
-        "API testování (Postman)",
+        "Postman – tvorba a spouštění requestů",
         value=st.session_state.done["api"],
     )
+    st.session_state.done["insomnia"] = st.checkbox(
+        "Insomnia / alternativní API klient",
+        value=st.session_state.done.get("insomnia", False),
+    )
+
+    # 🔹 Automatizace
+    st.subheader("Automatizace")
     st.session_state.done["auto"] = st.checkbox(
         "Automatizace – Python + Playwright/pytest",
         value=st.session_state.done["auto"],
+    )
+    st.session_state.done["selenium"] = st.checkbox(
+        "Selenium – starší framework pro UI testy",
+        value=st.session_state.done.get("selenium", False),
+    )
+    st.session_state.done["ci_cd"] = st.checkbox(
+        "CI/CD (GitHub Actions, Jenkins) – spouštění testů",
+        value=st.session_state.done.get("ci_cd", False),
+    )
+
+    # 🔹 Prostředí a ladění
+    st.subheader("Prostředí & ladění")
+    st.session_state.done["devtools"] = st.checkbox(
+        "Prohlížečové DevTools – inspekce, network, performance",
+        value=st.session_state.done.get("devtools", False),
+    )
+    st.session_state.done["docker"] = st.checkbox(
+        "Docker / VirtualBox – testovací prostředí",
+        value=st.session_state.done.get("docker", False),
+    )
+    st.session_state.done["logs"] = st.checkbox(
+        "Práce s logy a monitoring (Grafana, Kibana)",
+        value=st.session_state.done.get("logs", False),
+    )
+
+    # 🔹 Komunikace
+    st.subheader("Komunikace")
+    st.session_state.done["slack"] = st.checkbox(
+        "Slack / MS Teams – týmová komunikace",
+        value=st.session_state.done.get("slack", False),
     )
 
 def page_portfolio():
