@@ -59,6 +59,7 @@ def page_uvod():
 
 def page_zaklady():
     st.header("1) Základy")
+
     st.session_state.done["manual_vs_auto"] = st.checkbox(
         "Rozdíl: manuální vs. automatizované testování",
         value=st.session_state.done["manual_vs_auto"],
@@ -74,6 +75,34 @@ def page_zaklady():
     st.session_state.done["git"] = st.checkbox(
         "Verzování (Git) a GitHub",
         value=st.session_state.done["git"],
+    )
+    st.session_state.done["testing_basics"] = st.checkbox(
+        "Základy testování (bug, testcase, regression, smoke)",
+        value=st.session_state.done.get("testing_basics", False),
+    )
+    st.session_state.done["sdlc"] = st.checkbox(
+        "Životní cyklus SW (SDLC/STLC)",
+        value=st.session_state.done.get("sdlc", False),
+    )
+    st.session_state.done["agile"] = st.checkbox(
+        "Agile / Scrum základy",
+        value=st.session_state.done.get("agile", False),
+    )
+    st.session_state.done["logs"] = st.checkbox(
+        "Základy práce s logy",
+        value=st.session_state.done.get("logs", False),
+    )
+    st.session_state.done["linux"] = st.checkbox(
+        "Základy Linux/CLI",
+        value=st.session_state.done.get("linux", False),
+    )
+    st.session_state.done["networks"] = st.checkbox(
+        "Základy sítí (HTTP, DNS, IP)",
+        value=st.session_state.done.get("networks", False),
+    )
+    st.session_state.done["static_dynamic"] = st.checkbox(
+        "Statické vs. dynamické testování – chápu rozdíl",
+        value=st.session_state.done.get("static_dynamic", False),
     )
 
 def page_nastroje():
