@@ -11,7 +11,7 @@ st.set_page_config(page_title="Jak se stát testerem", page_icon="🐞", layout=
 st.markdown("""
 <style>
 .block-container {
-  max-width: 1600px;   /* nastav si klidně 1400/1500 nebo 100% !important */
+  max-width: 1400px;   /* nastav si klidně 1400/1500 nebo 100% !important */
   padding-left: 2rem;
   padding-right: 2rem;
 }
@@ -76,17 +76,17 @@ except Exception:
     st.experimental_set_query_params(page=chosen_slug)
 
 # 6) Přepiš HASH v URL na aktuální sekci (#uvod, #teorie, ...)
-components.html(f"""
+components.html("""
 <script>
-(function () {{
-  try {{
+(function () {
+  try {
     const url = new URL(window.parent.location.href);
-    url.hash = "#{chosen_slug}";   // pokud chceš hash úplně odstranit, dej: url.hash = "";
+    url.hash = "#%s";
     window.parent.history.replaceState(null, "", url.toString());
-  }} catch (e) {{}}
+  } catch (e) {}
 })();
 </script>
-""", height=0)
+""" % chosen_slug, height=0)
 
 # ========== STRÁNKY ==========
 def page_uvod():
