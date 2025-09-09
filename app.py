@@ -3,7 +3,6 @@ import streamlit as st
 import pandas as pd
 import requests
 import streamlit.components.v1 as components
-from typing import Optional
 
 # ===================== ZÁKLADNÍ NASTAVENÍ =====================
 st.set_page_config(page_title="Jak se stát testerem", page_icon="🐞", layout="wide")
@@ -12,11 +11,11 @@ st.set_page_config(page_title="Jak se stát testerem", page_icon="🐞", layout=
 st.markdown("""
 <style>
 .block-container {
-  max-width: 1600px;            /* změň klidně na 1400/1500 nebo 100% !important */
+  max-width: 1600px;      
   padding-left: 2rem;
   padding-right: 2rem;
 }
-main .block-container {          /* menší vertikální mezera nahoře */
+main .block-container {          
   padding-top: 0.75rem !important;
 }
 h1 { margin-top: 0 !important; }
@@ -35,6 +34,19 @@ st.markdown("""
 [data-testid="stSidebar"] [role="radiogroup"] p { font-size: 16px !important; }
 </style>
 """, unsafe_allow_html=True)
+
+# ---- Banner nahoře (jen jednou) ----
+banner_img = "https://raw.githubusercontent.com/streamlit/brand/main/logos/streamlit-mark-color.png"  # můžeš dát vlastní obrázek
+st.image(banner_img, use_container_width=True)
+st.markdown(
+    """
+    <div style="padding: 1.2rem; background-color: #f0f6ff; border-radius: 10px; margin-bottom: 1.5rem;">
+        <h1 style="margin: 0;">Jak se stát testerem – mini průvodce</h1>
+        <p style="margin: 0;">Postupně a v klidu. Základy a praxe. Zaškrtávej splněné kroky a sleduj postup.</p>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 # ===================== STAV (checkboxy) =====================
 if "done" not in st.session_state:
@@ -73,7 +85,6 @@ titles = [t for t, _ in PAGES]
 slugs  = {t: s for t, s in PAGES}
 from_slug = {s: t for t, s in PAGES}
 
-# 1) Načti slug z URL
 try:
     qp = st.query_params
     current_slug = qp.get("page", "uvod")
@@ -83,22 +94,18 @@ except Exception:
     qp = st.experimental_get_query_params()
     current_slug = qp.get("page", ["uvod"])[0]
 
-# 2) Předvol index rádia podle URL
 default_title = from_slug.get(current_slug, "Úvod")
 default_index = titles.index(default_title)
 
-# 3) Sidebar + radio
 st.sidebar.markdown("<h2>📚 Navigace</h2>", unsafe_allow_html=True)
 menu = st.sidebar.radio("", titles, index=default_index)
 
-# 4) Zapiš vybranou stránku zpět do URL (?page=...)
 chosen_slug = slugs[menu]
 try:
     st.query_params["page"] = chosen_slug
 except Exception:
     st.experimental_set_query_params(page=chosen_slug)
 
-# 5) Vyčisti hash v URL (zabíjí staré #bdd-...)
 components.html("""
 <script>
 (function () {
@@ -111,71 +118,8 @@ components.html("""
 </script>
 """, height=0)
 
-# ===================== HERO BANNER (helpers + vykreslení) =====================
-def hero_banner(title: str, subtitle: str = "", img_path: Optional[str] = None):
-    """Jednoduchý banner přes šířku s volitelným obrázkem vpravo."""
-    if img_path:
-        c1, c2 = st.columns([3, 1], vertical_alignment="center")
-        with c1:
-            st.markdown(
-                f"""
-                <div style="
-                  background:linear-gradient(90deg,#eef6ff 0%,#f8fbff 100%);
-                  border:1px solid rgba(0,0,0,.06);
-                  border-radius:16px; padding:18px 22px; margin:4px 0 16px 0;">
-                  <h2 style="margin:0">{title}</h2>
-                  <p style="margin:6px 0 0; color:#334; font-size:15px">{subtitle}</p>
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
-        with c2:
-            try:
-                st.image(img_path, use_column_width=True)
-            except Exception:
-                pass
-    else:
-        st.markdown(
-            f"""
-            <div style="
-              background:linear-gradient(90deg,#eef6ff 0%,#f8fbff 100%);
-              border:1px solid rgba(0,0,0,.06);
-              border-radius:16px; padding:18px 22px; margin:4px 0 16px 0;">
-              <h2 style="margin:0">{title}</h2>
-              <p style="margin:6px 0 0; color:#334; font-size:15px">{subtitle}</p>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-
-def show_banner_for(menu_title: str):
-    cfg = {
-        "Úvod": (
-            "Jak se stát testerem – mini průvodce",
-            "Postupně a v klidu. Základy a praxe. Zaškrtávej splněné kroky a sleduj postup.",
-            "assets/junior-software-tester.png",    # volitelné: vlastní obrázek
-        ),
-        "Základy": ("1) Základy", "Co je dobré znát na startu", None),
-        "Nástroje": ("2) Nástroje a praxe", "S čím budeš pracovat každý den", None),
-        "Portfolio": ("3) Portfolio a práce", "Co ukázat v žádosti a na pohovoru", "assets/junior-software-tester.png"),
-        "Mini kvíz": ("🧩 Mini kvíz – pohovorové otázky", "Krátké ověření teorie", None),
-        "Timeline": ("🗓️ Doporučená timeline", "Návrh postupu po týdnech", None),
-        "Zdroje": ("📚 Užitečné zdroje", "Linky, které se hodí do praxe", None),
-        "📖 Teorie": ("📖 Základní teorie testování", "Přehled pojmů a typů testů", None),
-        "🧭 QA tahák": ("🧭 QA tahák (proces + šablony)", "Rychlé šablony do práce", None),
-        "🌐 API tester": ("🌐 API dokumentace + rychlý tester", "Zkus si volání API rovnou v appce", None),
-    }
-    title, subtitle, img = cfg.get(menu_title, (menu_title, "", None))
-    hero_banner(title, subtitle, img)
-
-# vykresli banner pro vybranou sekci (objeví se nad obsahem stránky)
-show_banner_for(menu)
-
-
 # ===================== STRÁNKY =====================
 def page_uvod():
-    st.title("Jak se stát testerem – mini průvodce")
-    st.write("Postupně a v klidu. Základy a praxe. Zaškrtávej splněné kroky a sleduj postup.")
     col1, col2 = st.columns([1, 2], vertical_alignment="center")
     with col1:
         st.metric("Splněno", f"{progress_pct()} %")
