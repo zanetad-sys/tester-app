@@ -87,7 +87,23 @@ try:
     st.query_params["page"] = chosen_slug
 except Exception:
     st.experimental_set_query_params(page=chosen_slug)
+# 5) Ulož slug do URL (aby se vždy zobrazil správný ?page=...)
+chosen_slug = slugs[menu]
+try:
+    st.query_params["page"] = chosen_slug
+except Exception:
+    st.experimental_set_query_params(page=chosen_slug)
 
+# 6) VYČISTI HASH (#...) Z URL, aby tam nezůstávalo třeba #bdd-...
+st.markdown("""
+<script>
+const url = new URL(window.location);
+if (url.hash) {
+  url.hash = "";
+  window.history.replaceState(null, "", url);
+}
+</script>
+""", unsafe_allow_html=True)
 
 # ========== STRÁNKY ==========
 def page_uvod():
