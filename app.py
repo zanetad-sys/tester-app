@@ -11,11 +11,11 @@ st.set_page_config(page_title="Jak se stát testerem", page_icon="🐞", layout=
 st.markdown("""
 <style>
 .block-container {
-  max-width: 1600px;      
+  max-width: 1600px;
   padding-left: 2rem;
   padding-right: 2rem;
 }
-main .block-container {          
+main .block-container {
   padding-top: 0.75rem !important;
 }
 h1 { margin-top: 0 !important; }
@@ -35,39 +35,6 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# ---- Banner nahoře (jen jednou) ----
-banner_img = "https://raw.githubusercontent.com/streamlit/brand/main/logos/streamlit-mark-color.png"  # můžeš dát vlastní obrázek
-st.image(banner_img, use_container_width=True)
-st.markdown(
-    """
-    <div style="padding: 1.2rem; background-color: #f0f6ff; border-radius: 10px; margin-bottom: 1.5rem;">
-        <h1 style="margin: 0;">Jak se stát testerem – mini průvodce</h1>
-        <p style="margin: 0;">Postupně a v klidu. Základy a praxe. Zaškrtávej splněné kroky a sleduj postup.</p>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
-
-# ===================== STAV (checkboxy) =====================
-if "done" not in st.session_state:
-    st.session_state.done = {
-        "manual_vs_auto": False,
-        "web_basics": False,
-        "sql": False,
-        "git": False,
-        "jira": False,
-        "testcases": False,
-        "api": False,
-        "auto": False,
-        "projects": False,
-        "readme": False,
-        "cv": False,
-    }
-
-def progress_pct() -> int:
-    d = st.session_state.get("done", {})
-    return int(100 * sum(d.values()) / len(d)) if d else 0
-
 # ===================== MENU (URL ?page=...) =====================
 PAGES = [
     ("Úvod", "uvod"),
@@ -85,39 +52,15 @@ titles = [t for t, _ in PAGES]
 slugs  = {t: s for t, s in PAGES}
 from_slug = {s: t for t, s in PAGES}
 
-try:
-    qp = st.query_params
-    current_slug = qp.get("page", "uvod")
-    if isinstance(current_slug, list):
-        current_slug = current_slug[0]
-except Exception:
-    qp = st.experimental_get_query_params()
-    current_slug = qp.get("page", ["uvod"])[0]
-
-default_title = from_slug.get(current_slug, "Úvod")
-default_index = titles.index(default_title)
-
+# Sidebar
 st.sidebar.markdown("<h2>📚 Navigace</h2>", unsafe_allow_html=True)
-menu = st.sidebar.radio("", titles, index=default_index)
+menu = st.sidebar.radio("", titles, index=0)
 
-chosen_slug = slugs[menu]
-try:
-    st.query_params["page"] = chosen_slug
-except Exception:
-    st.experimental_set_query_params(page=chosen_slug)
-
-components.html("""
-<script>
-(function () {
-  try {
-    const url = new URL(window.parent.location.href);
-    url.hash = "";
-    window.parent.history.replaceState(null, "", url.toString());
-  } catch (e) {}
-})();
-</script>
-""", height=0)
-
+# === BANNER OBRÁZEK NAD OBSAHEM ===
+st.image(
+    "https://i.ibb.co/vZnMZ5X/junior-tester-banner.jpg",
+    use_container_width=True
+)
 # ===================== STRÁNKY =====================
 def page_uvod():
     col1, col2 = st.columns([1, 2], vertical_alignment="center")
