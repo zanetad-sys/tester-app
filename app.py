@@ -311,23 +311,23 @@ def page_qatahaky():
     st.header("🧭 QA tahák (proces + šablony)")
     st.markdown("Rychlé taháky pro praxi testera. Stáhni si šablony a používej ve svých projektech.")
 
-    st.markdown("### 0) Příprava")
+    st.markdown("### 1) Příprava")
     st.write("""
 - **Cíl & rozsah**, **Rizika/priorita**, **Prostředí & data**, **DoD**
 """)
-    st.markdown("### 1) Návrh testů")
+    st.markdown("### 2) Návrh testů")
     st.write("""
 - Techniky: ekvivalence, hranice, stavové přechody, pairwise  
 - Úrovně: unit/API/UI; typy: funkční, negativní, regresní, smoke  
 - Minimal viable set: nejdřív **smoke**, pak kritické cesty, pak okraje  
 """)
-    st.markdown("### 2) Provedení")
+    st.markdown("### 3) Provedení")
     st.write("""
 - Scripted + Exploratory ~ 70/30 (timebox 30–60 min)  
 - Evidence: PASS/FAIL, screenshot/log/HAR u failů  
 - Verzování: drž v Gitu (README, `tests/`, `testcases.xlsx`)  
 """)
-    st.markdown("### 3) Bug report – šablona")
+    st.markdown("### 4) Bug report – šablona")
     bug = """Název: [Checkout] 500 při prázdném košíku
 Prostředí: test, v1.2.3 (build #456), Chrome 127
 Kroky: 1) Otevřít /checkout 2) Kliknout „Zaplatit“ s prázdným košíkem
