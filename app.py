@@ -301,13 +301,25 @@ def page_kviz():
 
 def page_timeline():
     st.header("🗓️ Doporučená timeline")
+
     timeline = pd.DataFrame(
         {
-            "Týden": ["1", "2", "3", "4"],
-            "Fokus": ["Základy + Git", "API testování", "Automatizace", "Portfolio/README"],
+            "Týden": [
+                "1–2", "3–4", "5–6", "7–8", "9–10", "11–12"
+            ],
+            "Fokus": [
+                "Základy testování (manuál/auto, funkční vs. nefunkční, bug reporty)",
+                "Git + GitHub, základy webu (HTML/CSS/JS), SQL",
+                "Nástroje: Jira, Postman, TestRail",
+                "Automatizace: Python, Playwright/pytest, CI/CD",
+                "Miniprojekty na GitHubu, README, bug reporty, test cases",
+                "Příprava na pohovor, CV + LinkedIn, praktické úkoly",
+            ],
         }
     )
     st.table(timeline)
+    st.info("⏱️ Plán je orientační – můžeš postupovat rychleji nebo pomaleji podle svých možností.")
+
 
 def page_zdroje():
     st.header("📚 Užitečné zdroje")
