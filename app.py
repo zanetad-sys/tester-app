@@ -474,3 +474,4 @@ elif menu == "🧭 QA tahák":
     page_qatahaky()
 elif menu == "🌐 API tester":
     page_api_tester()
+
