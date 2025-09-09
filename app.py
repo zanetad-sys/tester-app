@@ -2,31 +2,21 @@ import json
 import streamlit as st
 import pandas as pd
 import requests
-import streamlit.components.v1 as components  # <- DŮLEŽITÉ pro práci s URL/hash
+import streamlit.components.v1 as components  # pro práci s URL/hash
 
 # ========== ZÁKLADNÍ NASTAVENÍ APPKY ==========
 st.set_page_config(page_title="Jak se stát testerem", page_icon="🐞", layout="wide")
 
-import streamlit as st
-# ... ostatní importy
-
-st.set_page_config(page_title="Jak se stát testerem", page_icon="✅", layout="wide")
-
-# ⬇️ SEM VLOŽ GLOBÁLNÍ CSS NA ŠÍŘKU OBSAHU
+# ========== GLOBAL CSS – rozšíření hlavního obsahu ==========
 st.markdown("""
 <style>
-/* rozšíření hlavního kontejneru pro všechny stránky */
 .block-container {
-  max-width: 1600px;      /* klidně změň na 1400/1500/100% */
+  max-width: 1600px;   /* nastav si klidně 1400/1500 nebo 100% !important */
   padding-left: 2rem;
   padding-right: 2rem;
 }
 </style>
 """, unsafe_allow_html=True)
-
-# (pak může zůstat tvůj existující CSS pro sidebar, menu atd.)
-# st.markdown("""<style> ... sidebar styly ... </style>""", unsafe_allow_html=True)
-
 
 # ========== STYLY (větší titulek a čitelnější menu v sidebaru) ==========
 st.markdown("""
@@ -42,26 +32,6 @@ st.markdown("""
 [data-testid="stSidebar"] [role="radiogroup"] p { font-size: 16px !important; }
 </style>
 """, unsafe_allow_html=True)
-
-# ========== STAV (checkboxy) ==========
-if "done" not in st.session_state:
-    st.session_state.done = {
-        "manual_vs_auto": False,
-        "web_basics": False,
-        "sql": False,
-        "git": False,
-        "jira": False,
-        "testcases": False,
-        "api": False,
-        "auto": False,
-        "projects": False,
-        "readme": False,
-        "cv": False,
-    }
-
-def percent():
-    d = st.session_state.done
-    return int(100 * sum(d.values()) / len(d)) if d else 0
 
 # ========== MENU V SIDEBARU (s URL param & hash) ==========
 
@@ -84,10 +54,10 @@ from_slug = {s: t for t, s in PAGES}
 
 # 2) Načti slug z URL (?page=...), default = uvod
 try:
-    qp = st.query_params                 # nové API
+    qp = st.query_params  # nové API
     current_slug = qp.get("page", ["uvod"])[0]
 except Exception:
-    qp = st.experimental_get_query_params()  # fallback pro starší verze
+    qp = st.experimental_get_query_params()  # fallback
     current_slug = qp.get("page", ["uvod"])[0]
 
 # 3) Předvol index rádia podle URL
@@ -111,10 +81,10 @@ components.html(f"""
 (function () {{
   try {{
     const url = new URL(window.parent.location.href);
-    url.hash = "#{chosen_slug}";             // pokud chceš hash úplně odstranit, dej: url.hash = "";
+    url.hash = "#{chosen_slug}";   // pokud chceš hash úplně odstranit, dej: url.hash = "";
     window.parent.history.replaceState(null, "", url.toString());
   }} catch (e) {{}}
-}})();
+})();
 </script>
 """, height=0)
 
