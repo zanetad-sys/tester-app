@@ -221,10 +221,47 @@ def page_teorie():
 - **Validace** = Ověřuji, zda produkt splňuje potřeby uživatele (*Stavíme správnou věc?*).
 """)
 
-    st.subheader("Severity vs. Priorita")
-    st.markdown("""
-- **Severity** = jak vážná je chyba (dopad).  
-- **Priorita** = jak rychle se má opravit (pořadí práce).
+    st.subheader("Severita vs. Priorita")
+st.markdown("""
+### 🔹 Severita (Severity)
+Udává **závažnost chyby z technického pohledu** – jak moc chyba ovlivňuje funkčnost systému.  
+Obvykle ji určuje **tester/QA**.
+
+**Úrovně:**
+- 🟥 **Critical / Blocker** – aplikace je nepoužitelná (např. nelze se přihlásit, platby nefungují)  
+- 🟧 **High / Major** – zásadní chyba, ale systém se dá částečně používat  
+- 🟨 **Medium** – omezuje určitou funkčnost, existuje workaround  
+- 🟩 **Low / Minor** – drobnost bez dopadu na hlavní funkčnost (např. překlep)  
+
+---
+
+### 🔹 Priorita (Priority)
+Udává **pořadí, v jakém má být chyba opravena** – jak rychle se má řešit.  
+Obvykle ji určuje **Product Owner / Project Manager**.
+
+**Úrovně:**
+- 🔴 **High** – musí být opraveno okamžitě (např. kritický bug na produkci)  
+- 🟠 **Medium** – opravit před vydáním, ale není blocker  
+- 🟢 **Low** – může počkat, nebrání release (např. kosmetická úprava)  
+
+---
+
+### 🔹 Rozdíl v praxi
+- **Severita = dopad na systém**  
+- **Priorita = kdy to opravíme (business pohled)**  
+
+**Příklady:**
+- ✅ Překlep v názvu aplikace:  
+  - Severita: Low  
+  - Priorita: High (ostuda na produkci)  
+
+- ✅ Platba kartou nefunguje:  
+  - Severita: Critical  
+  - Priorita: High  
+
+- ✅ Tlačítko padá jen v Edge:  
+  - Severita: Medium  
+  - Priorita: Low  
 """)
 
     st.subheader("Bug vs. Defect vs. Failure")
