@@ -173,20 +173,47 @@ def page_nastroje():
 
 def page_portfolio():
     st.header("3) Portfolio a práce")
+
+    # 🔹 GitHub projekty
+    st.subheader("GitHub projekty")
     st.session_state.done["projects"] = st.checkbox(
-        "Miniprojekty na GitHubu",
+        "Miniprojekty na GitHubu (testovací skripty, ukázky)",
         value=st.session_state.done["projects"],
     )
+    st.session_state.done["bug_reports"] = st.checkbox(
+        "Ukázkové bug reporty v repozitáři",
+        value=st.session_state.done.get("bug_reports", False),
+    )
+    st.session_state.done["testcases_repo"] = st.checkbox(
+        "Test cases v repozitáři (např. XLSX/Markdown)",
+        value=st.session_state.done.get("testcases_repo", False),
+    )
+
+    # 🔹 Dokumentace & ukázky
+    st.subheader("Dokumentace & ukázky")
     st.session_state.done["readme"] = st.checkbox(
-        "README a ukázkové bug reporty",
+        "README s popisem projektů a nástrojů",
         value=st.session_state.done["readme"],
     )
+    st.session_state.done["templates"] = st.checkbox(
+        "Šablony (bug report, test case, checklist)",
+        value=st.session_state.done.get("templates", False),
+    )
+
+    # 🔹 Prezentace sebe
+    st.subheader("Prezentace")
     st.session_state.done["cv"] = st.checkbox(
-        "CV + LinkedIn – zdůraznit praxi",
+        "CV (zaměřené na QA) + LinkedIn profil",
         value=st.session_state.done["cv"],
+    )
+    st.session_state.done["blog"] = st.checkbox(
+        "Sdílené poznámky / blog o testování",
+        value=st.session_state.done.get("blog", False),
     )
 
     st.divider()
+
+    # 🗺️ Týdenní plán (ponechávám, jak už máš)
     with st.form("plan"):
         st.subheader("🗺️ Týdenní plán")
         jmeno = st.text_input("Jméno (volitelné)", "")
@@ -221,6 +248,7 @@ def page_portfolio():
             }
             st.success((f"{jmeno}, " if jmeno else "") + f"tvůj plán na {hodin} h/týden:")
             st.write("\n".join(body[fokus]))
+
 
 def page_kviz():
     st.header("🧩 Mini kvíz")
