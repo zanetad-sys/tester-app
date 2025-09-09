@@ -263,7 +263,8 @@ Obvykle ji určuje **Product Owner / Project Manager**.
   - Severita: Medium  
   - Priorita: Low  
 """)
-    st.subheader("Bug vs. Defect vs. Failure")
+    
+st.subheader("Bug vs. Defect vs. Failure")
     st.markdown("""
 - **Bug** = chyba nalezená při testování.  
 - **Defect** = nesoulad se specifikací (většinou v kódu).  
