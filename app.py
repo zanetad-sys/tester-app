@@ -117,7 +117,7 @@ def page_uvod():
                 st.session_state.done[k] = False
             st.rerun()
     with col2:
-        st.info("Tip: Používej menu vlevo. Každá sekce se zobrazí tady v hlavní části.")
+        st.info("Tip: 👉Používej menu vlevo. Každá sekce se zobrazí tady v hlavní části.")
 
 def page_zaklady():
     st.header("1) Základy")
